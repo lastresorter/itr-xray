@@ -1157,12 +1157,12 @@ func (s *ServerService) GetLogs(count string, level string, syslog string) []str
 		}
 
 		// Use hardcoded command with validated parameters
-		cmd := exec.CommandContext(context.Background(), "journalctl", "-u", "x-ui", "--no-pager", "-n", strconv.Itoa(countInt), "-p", level)
+		cmd := exec.CommandContext(context.Background(), "journalctl", "-u", "itr-xray", "--no-pager", "-n", strconv.Itoa(countInt), "-p", level)
 		var out bytes.Buffer
 		cmd.Stdout = &out
 		err = cmd.Run()
 		if err != nil {
-			return []string{"Failed to run journalctl command! Make sure systemd is available and x-ui service is registered."}
+			return []string{"Failed to run journalctl command! Make sure systemd is available and itr-xray service is registered."}
 		}
 		lines = strings.Split(out.String(), "\n")
 	} else {
@@ -1494,7 +1494,7 @@ func (s *ServerService) GetDb() ([]byte, error) {
 }
 
 func (s *ServerService) backupSQLite() (string, func(), error) {
-	backupDir, err := os.MkdirTemp(filepath.Dir(config.GetDBPath()), ".x-ui-backup-")
+	backupDir, err := os.MkdirTemp(filepath.Dir(config.GetDBPath()), ".itr-xray-backup-")
 	if err != nil {
 		return "", nil, err
 	}
@@ -1516,7 +1516,7 @@ func (s *ServerService) backupSQLite() (string, func(), error) {
 // is named after whatever address the user reached the panel with, no Listen
 // Domain needed. The Telegram bot has no request and passes "", falling back to
 // the configured Listen Domain (webDomain) and then the public IP. The extension
-// is .dump on PostgreSQL and .db on SQLite; the base falls back to "x-ui" when
+// is .dump on PostgreSQL and .db on SQLite; the base falls back to "itr-xray" when
 // no address is known.
 func (s *ServerService) BackupFilename(requestHost string) string {
 	ext := ".db"
@@ -1538,7 +1538,7 @@ func backupDateSuffix(now time.Time) string {
 // (webDomain) and then the resolved public IP (IPv4 before IPv6), reduced to safe
 // filename characters. The public IP is resolved directly rather than read from
 // LastStatus so callers whose ServerService never runs the status ticker —
-// notably the Telegram bot — still get a real address instead of the "x-ui"
+// notably the Telegram bot — still get a real address instead of the "itr-xray"
 // fallback.
 func (s *ServerService) backupHost(requestHost string) string {
 	host := extractHostname(strings.TrimSpace(requestHost))
@@ -1561,7 +1561,7 @@ func (s *ServerService) backupHost(requestHost string) string {
 // sanitizeBackupHost reduces a host to characters safe in a download filename
 // (the getDb handler enforces ^[a-zA-Z0-9_\-.]+$). IPv6 brackets are stripped
 // and any other character — such as the colons in an IPv6 address — becomes a
-// hyphen. Returns "x-ui" when nothing usable remains.
+// hyphen. Returns "itr-xray" when nothing usable remains.
 func sanitizeBackupHost(host string) string {
 	host = strings.Trim(host, "[]")
 	var b strings.Builder
@@ -1575,7 +1575,7 @@ func sanitizeBackupHost(host string) string {
 	}
 	out := strings.Trim(b.String(), ".-")
 	if out == "" {
-		return "x-ui"
+		return "itr-xray"
 	}
 	return out
 }
@@ -1586,7 +1586,7 @@ func sanitizeBackupHost(host string) string {
 // then seed a panel running on the other backend.
 func (s *ServerService) GetMigration() ([]byte, string, error) {
 	if database.IsPostgres() {
-		tmp, err := os.CreateTemp("", "x-ui-migration-*.db")
+		tmp, err := os.CreateTemp("", "itr-xray-migration-*.db")
 		if err != nil {
 			return nil, "", err
 		}
@@ -1601,7 +1601,7 @@ func (s *ServerService) GetMigration() ([]byte, string, error) {
 		if err != nil {
 			return nil, "", err
 		}
-		return data, "x-ui.db", nil
+		return data, "itr-xray.db", nil
 	}
 
 	backupPath, cleanup, err := s.backupSQLite()
@@ -1613,7 +1613,7 @@ func (s *ServerService) GetMigration() ([]byte, string, error) {
 	if err != nil {
 		return nil, "", err
 	}
-	return data, "x-ui.dump", nil
+	return data, "itr-xray.dump", nil
 }
 
 // hostBoundSettingKeys are the settings that describe *this* machine rather
@@ -1918,7 +1918,7 @@ func pgRestoreReadFailureError(probeOutput, localVersion string) error {
 		localVersion = "unknown"
 	}
 	if major, known := pgArchiveVersionIntroducedIn[m[1]]; known {
-		return common.NewErrorf("This backup was created by pg_dump from PostgreSQL %d or newer, but the server's pg_restore is version %s and cannot read it; run 'x-ui pgclient %d' on the server (or upgrade the postgresql-client package to version %d or newer), then retry the import", major, localVersion, major, major)
+		return common.NewErrorf("This backup was created by pg_dump from PostgreSQL %d or newer, but the server's pg_restore is version %s and cannot read it; run 'itr-xray pgclient %d' on the server (or upgrade the postgresql-client package to version %d or newer), then retry the import", major, localVersion, major, major)
 	}
 	return common.NewErrorf("This backup was created by a newer pg_dump than the server's pg_restore (version %s) can read; upgrade the postgresql-client package and retry the import", localVersion)
 }
@@ -1997,7 +1997,7 @@ func (s *ServerService) restorePostgresDump(file multipart.File, keepHostSetting
 		return common.NewErrorf("invalid PostgreSQL DSN: %v", err)
 	}
 
-	tempFile, err := os.CreateTemp("", "x-ui-pg-restore-*.dump")
+	tempFile, err := os.CreateTemp("", "itr-xray-pg-restore-*.dump")
 	if err != nil {
 		return common.NewErrorf("Error creating temporary dump file: %v", err)
 	}
@@ -2064,7 +2064,7 @@ func (s *ServerService) restorePostgresDump(file multipart.File, keepHostSetting
 }
 
 func (s *ServerService) migrateSQLiteIntoPostgres(file multipart.File, isSQLDump bool) error {
-	tempDir, err := os.MkdirTemp("", "x-ui-pg-migrate-*")
+	tempDir, err := os.MkdirTemp("", "itr-xray-pg-migrate-*")
 	if err != nil {
 		return common.NewErrorf("Error creating temporary folder: %v", err)
 	}

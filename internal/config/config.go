@@ -161,7 +161,7 @@ func GetDBFolderPath() string {
 	if runtime.GOOS == "windows" {
 		return getBaseDir()
 	}
-	return "/etc/x-ui"
+	return "/etc/itr-xray"
 }
 
 // GetDBPath returns the full path to the database file.
@@ -205,7 +205,7 @@ func GetNodeTokenKeyFile() string {
 	if p := strings.TrimSpace(os.Getenv("XUI_NODE_TOKEN_KEY_FILE")); p != "" {
 		return p
 	}
-	return "/etc/x-ui/node_token_key.json"
+	return "/etc/itr-xray/node_token_key.json"
 }
 
 // GetNodeTokenKeyEnv returns the name of the env var holding a single base64
@@ -221,9 +221,9 @@ func GetEnvFilePaths() []string {
 		return nil
 	}
 	return []string{
-		"/etc/default/x-ui",
-		"/etc/conf.d/x-ui",
-		"/etc/sysconfig/x-ui",
+		"/etc/default/itr-xray",
+		"/etc/conf.d/itr-xray",
+		"/etc/sysconfig/itr-xray",
 	}
 }
 
@@ -237,12 +237,12 @@ func GetLogFolder() string {
 	// scatters a log/ directory through the source tree (one per tested package).
 	// Redirect test runs to a shared temp folder so the source tree stays clean.
 	if testing.Testing() {
-		return filepath.Join(os.TempDir(), "3x-ui-test-log")
+		return filepath.Join(os.TempDir(), "itr-xray-test-log")
 	}
 	if runtime.GOOS == "windows" {
 		return filepath.Join(".", "log")
 	}
-	return "/var/log/x-ui"
+	return "/var/log/itr-xray"
 }
 
 func copyFile(src, dst string) error {
@@ -273,7 +273,7 @@ func init() {
 	if os.Getenv("XUI_DB_FOLDER") != "" {
 		return
 	}
-	oldDBFolder := "/etc/x-ui"
+	oldDBFolder := "/etc/itr-xray"
 	oldDBPath := fmt.Sprintf("%s/%s.db", oldDBFolder, GetName())
 	newDBFolder := GetDBFolderPath()
 	newDBPath := fmt.Sprintf("%s/%s.db", newDBFolder, GetName())

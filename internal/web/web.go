@@ -213,7 +213,7 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 		sessionOptions.MaxAge = sessionMaxAge * 60 // minutes -> seconds
 	}
 	store.Options(sessionOptions)
-	engine.Use(sessions.Sessions("3x-ui", store))
+	engine.Use(sessions.Sessions("itr-xray", store))
 	engine.Use(func(c *gin.Context) {
 		c.Set("base_path", basePath)
 	})
@@ -728,7 +728,7 @@ func (s *Server) start(restartXray bool, startTgBot bool) (err error) {
 		if err := s.tgbotService.TestConnection(); err != nil {
 			return fmt.Errorf("telegram API test failed: %w", err)
 		}
-		s.tgbotService.SendMsgToTgbotAdmins("✅ Test message from 3x-ui")
+		s.tgbotService.SendMsgToTgbotAdmins("✅ Test message from IT_RUNNER itr-xray")
 		return nil
 	})
 

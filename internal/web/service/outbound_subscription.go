@@ -58,7 +58,7 @@ func filterOutboundsRejectedByCore(label string, outbounds []any) ([]any, []stri
 // subscription may aggregate many upstream outbounds into one document.
 const maxOutboundSubscriptionBytes int64 = 8 << 20
 
-const defaultOutboundSubscriptionUserAgent = "3x-ui-outbound-sub/1.0"
+const defaultOutboundSubscriptionUserAgent = "itr-xray-outbound-sub/1.0"
 
 var errOutboundSubscriptionBodyTooLarge = errors.New("outbound subscription response body exceeds size limit")
 
