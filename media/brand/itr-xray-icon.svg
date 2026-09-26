@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="IT_RUNNER">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ITR">
 <defs><linearGradient id="g" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#2A2953"/><stop offset="1" stop-color="#5956B1"/></linearGradient>
 <radialGradient id="m" cx="0.92" cy="0.95" r="0.55"><stop offset="0" stop-color="#B455AD" stop-opacity="0.55"/><stop offset="1" stop-color="#B455AD" stop-opacity="0"/></radialGradient></defs>
 <rect width="512" height="512" rx="112" fill="url(#g)"/><rect width="512" height="512" rx="112" fill="url(#m)"/>
-<path fill="#FFFFFF" transform="translate(77.0 306.0) scale(0.20000)" d="M290 -700V0H70V-700Z M1125 -700V-500H870V0H650V-500H395V-700Z M1720 40V200H1160V40Z"/></svg>
+<path fill="#FFFFFF" transform="translate(73.7 317.7) scale(0.17617)" d="M290 -700V0H70V-700Z M1125 -700V-500H870V0H650V-500H395V-700Z M1795 -700Q1901 -700 1950.5 -653.5Q2000 -607 2000 -508V-506Q2000 -431 1971 -392Q1942 -353 1875 -341Q1910 -336 1934 -325Q1958 -314 1972.5 -295.5Q1987 -277 1993.5 -249.5Q2000 -222 2000 -185V0H1780V-165Q1780 -207 1763.5 -223.5Q1747 -240 1705 -240H1450V0H1230V-700ZM1725 -420Q1756 -420 1768 -431Q1780 -442 1780 -469V-471Q1780 -498 1768 -509Q1756 -520 1725 -520H1450V-420Z"/></svg>

@@ -898,7 +898,6 @@ export class LanguageManager {
     { name: 'Tiếng Việt', value: 'vi-VN', icon: '🇻🇳' },
     { name: 'Español', value: 'es-ES', icon: '🇪🇸' },
     { name: 'Indonesian', value: 'id-ID', icon: '🇮🇩' },
-    { name: 'Український', value: 'uk-UA', icon: '🇺🇦' },
     { name: 'Türkçe', value: 'tr-TR', icon: '🇹🇷' },
     { name: 'Português', value: 'pt-BR', icon: '🇧🇷' },
   ];
@@ -928,9 +927,8 @@ export class LanguageManager {
         ['vi', LanguageManager.supportedLanguages[7].value],
         ['es', LanguageManager.supportedLanguages[8].value],
         ['id', LanguageManager.supportedLanguages[9].value],
-        ['uk', LanguageManager.supportedLanguages[10].value],
-        ['tr', LanguageManager.supportedLanguages[11].value],
-        ['pt', LanguageManager.supportedLanguages[12].value],
+        ['tr', LanguageManager.supportedLanguages[10].value],
+        ['pt', LanguageManager.supportedLanguages[11].value],
       ];
 
       simularLangs.forEach((pair) => {
