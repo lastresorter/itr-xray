@@ -34,57 +34,83 @@ const initialDark = readBool(STORAGE_DARK, true);
 const initialUltra = readBool(STORAGE_ULTRA, false);
 applyDom(initialDark, initialUltra);
 
+// IT_RUNNER palette (see README.md, раздел «Фирменный стиль»): navy surfaces taken from the
+// brand deck's gradient, violet #5956B1 as the primary, magenta #B455AD as a
+// rare accent. Dark-mode primaries are lifted so text keeps WCAG AA contrast.
+const BRAND_FONT_TOKENS = {
+  fontFamily:
+    "'Inter Variable', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  borderRadius: 8,
+  borderRadiusLG: 14,
+};
 const DARK_TOKENS = {
-  colorBgBase: '#1a1b1f',
-  colorBgLayout: '#1a1b1f',
-  colorBgContainer: '#23252b',
-  colorBgElevated: '#2d2f37',
+  ...BRAND_FONT_TOKENS,
+  colorPrimary: '#6966C9',
+  colorLink: '#8F8CEB',
+  colorLinkHover: '#A9A7F2',
+  colorInfo: '#6966C9',
+  colorBgBase: '#1C1B3A',
+  colorBgLayout: '#1C1B3A',
+  colorBgContainer: '#262550',
+  colorBgElevated: '#302E60',
 };
 const ULTRA_DARK_TOKENS = {
-  colorBgBase: '#000',
-  colorBgLayout: '#000',
-  colorBgContainer: '#101013',
-  colorBgElevated: '#1a1a1e',
+  ...BRAND_FONT_TOKENS,
+  colorPrimary: '#6966C9',
+  colorLink: '#8F8CEB',
+  colorLinkHover: '#A9A7F2',
+  colorInfo: '#6966C9',
+  colorBgBase: '#0B0A18',
+  colorBgLayout: '#0B0A18',
+  colorBgContainer: '#151430',
+  colorBgElevated: '#1D1C3A',
 };
 const DARK_LAYOUT_TOKENS = {
-  bodyBg: '#1a1b1f',
-  headerBg: '#15161a',
+  bodyBg: '#1C1B3A',
+  headerBg: '#17162F',
   headerColor: '#ffffff',
-  footerBg: '#1a1b1f',
-  siderBg: '#15161a',
-  triggerBg: '#23252b',
+  footerBg: '#1C1B3A',
+  siderBg: '#17162F',
+  triggerBg: '#262550',
   triggerColor: '#ffffff',
 };
 const ULTRA_DARK_LAYOUT_TOKENS = {
-  bodyBg: '#000',
-  headerBg: '#050507',
+  bodyBg: '#0B0A18',
+  headerBg: '#0E0D1E',
   headerColor: '#ffffff',
-  footerBg: '#000',
-  siderBg: '#050507',
-  triggerBg: '#1a1a1e',
+  footerBg: '#0B0A18',
+  siderBg: '#0E0D1E',
+  triggerBg: '#1D1C3A',
   triggerColor: '#ffffff',
 };
 const DARK_MENU_TOKENS = {
-  darkItemBg: '#15161a',
-  darkSubMenuItemBg: '#1a1b1f',
-  darkPopupBg: '#23252b',
+  darkItemBg: '#17162F',
+  darkSubMenuItemBg: '#1C1B3A',
+  darkPopupBg: '#262550',
+  darkItemSelectedBg: '#5956B1',
 };
 const ULTRA_DARK_MENU_TOKENS = {
-  darkItemBg: '#050507',
-  darkSubMenuItemBg: '#000',
-  darkPopupBg: '#101013',
+  darkItemBg: '#0E0D1E',
+  darkSubMenuItemBg: '#0B0A18',
+  darkPopupBg: '#151430',
+  darkItemSelectedBg: '#4B48A3',
 };
 const DARK_CARD_TOKENS = {
-  colorBorderSecondary: 'rgba(255, 255, 255, 0.06)',
+  colorBorderSecondary: 'rgba(206, 208, 226, 0.08)',
 };
 const ULTRA_DARK_CARD_TOKENS = {
-  colorBorderSecondary: 'rgba(255, 255, 255, 0.04)',
+  colorBorderSecondary: 'rgba(206, 208, 226, 0.05)',
 };
 const STATISTIC_TOKENS = {
   contentFontSize: 17,
   titleFontSize: 11,
 };
 const LIGHT_CONTRAST_TOKENS = {
+  ...BRAND_FONT_TOKENS,
+  colorPrimary: '#5956B1',
+  colorInfo: '#5956B1',
+  colorLink: '#4B48A3',
+  colorBgLayout: '#EEEEF6',
   colorTextDescription: 'rgba(0, 0, 0, 0.58)',
   colorTextTertiary: 'rgba(0, 0, 0, 0.58)',
   colorTextPlaceholder: '#767676',
@@ -93,9 +119,13 @@ const LIGHT_CONTRAST_TOKENS = {
   colorSuccessText: '#237804',
 };
 const LIGHT_BUTTON_TOKENS = {
-  colorPrimary: '#0958d9',
-  colorPrimaryHover: '#2468e5',
-  colorPrimaryActive: '#073ea8',
+  colorPrimary: '#5956B1',
+  colorPrimaryHover: '#6966C9',
+  colorPrimaryActive: '#4B48A3',
+};
+const LIGHT_MENU_TOKENS = {
+  itemSelectedBg: 'rgba(89, 86, 177, 0.12)',
+  itemSelectedColor: '#4B48A3',
 };
 
 // hashed:false drops the `:where(.css-<hash>)` wrapper antd puts around every
@@ -121,6 +151,7 @@ export function buildAntdThemeConfig(isDark: boolean, isUltra: boolean): ThemeCo
       components: {
         Statistic: STATISTIC_TOKENS,
         Button: LIGHT_BUTTON_TOKENS,
+        Menu: LIGHT_MENU_TOKENS,
       },
     };
   }

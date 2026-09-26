@@ -4387,7 +4387,7 @@
     },
     {
       "name": "Nodes",
-      "description": "Manage remote 3x-ui panels acting as nodes for a central panel. All endpoints under /panel/api/nodes."
+      "description": "Manage remote itr-xray panels acting as nodes for a central panel. All endpoints under /panel/api/nodes."
     },
     {
       "name": "Hosts",
@@ -6095,7 +6095,7 @@
         "tags": [
           "Server"
         ],
-        "summary": "Check whether a newer 3x-ui release is available on GitHub.",
+        "summary": "Check whether a newer itr-xray release is available on GitHub.",
         "operationId": "get_panel_api_server_getPanelUpdateInfo",
         "responses": {
           "200": {
@@ -12404,7 +12404,7 @@
         "tags": [
           "Settings"
         ],
-        "summary": "Restart the entire 3x-ui process after a 3-second grace period. The connection drops immediately; the panel comes back online ~5-10 seconds later.",
+        "summary": "Restart the entire itr-xray process after a 3-second grace period. The connection drops immediately; the panel comes back online ~5-10 seconds later.",
         "operationId": "post_panel_api_setting_restartPanel",
         "responses": {
           "200": {
@@ -13888,8 +13888,8 @@
                   },
                   "userAgent": {
                     "type": "string",
-                    "default": "3x-ui-outbound-sub/1.0",
-                    "description": "Custom User-Agent sent when fetching this subscription. Defaults to \"3x-ui-outbound-sub/1.0\"."
+                    "default": "itr-xray-outbound-sub/1.0",
+                    "description": "Custom User-Agent sent when fetching this subscription. Defaults to \"itr-xray-outbound-sub/1.0\"."
                   },
                   "updateInterval": {
                     "type": "integer",
@@ -13986,8 +13986,8 @@
                   },
                   "userAgent": {
                     "type": "string",
-                    "default": "3x-ui-outbound-sub/1.0",
-                    "description": "Custom User-Agent sent when fetching this subscription. Defaults to \"3x-ui-outbound-sub/1.0\"."
+                    "default": "itr-xray-outbound-sub/1.0",
+                    "description": "Custom User-Agent sent when fetching this subscription. Defaults to \"itr-xray-outbound-sub/1.0\"."
                   },
                   "updateInterval": {
                     "type": "integer",

@@ -36,7 +36,7 @@
   justify-content: space-between;
   gap: 8px;
   height: 58px;
-  padding: 0 16px 0 24px;
+  padding: 0 12px 0 22px;
   border-bottom: 1px solid var(--ant-color-border-secondary);
   user-select: none;
   white-space: nowrap;
@@ -59,43 +59,13 @@
 
 .brand-actions .sidebar-pin,
 .brand-actions .sidebar-docs,
-.brand-actions .sidebar-donate,
 .brand-actions .sidebar-theme-cycle {
   width: 26px;
   height: 26px;
 }
 
-.sidebar-donate {
-  background: transparent;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ant-color-text-secondary);
-  text-decoration: none;
-  flex-shrink: 0;
-  transition:
-    background-color 0.2s,
-    transform 0.15s,
-    color 0.2s;
-}
-
-.sidebar-donate:hover,
-.sidebar-donate:focus-visible {
-  background-color: rgba(236, 72, 153, 0.12);
-  color: #ec4899;
-  transform: scale(1.08);
-  outline: none;
-}
-
-.sidebar-donate .anticon {
-  font-size: 16px;
-}
-
 .sidebar-docs {
+  cursor: pointer;
   background: transparent;
   border: none;
   width: 30px;
@@ -279,6 +249,10 @@
 }
 
 .sider-version {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -337,12 +311,12 @@
 
 body.dark .ant-drawer-content,
 body.dark .ant-drawer-body {
-  background-color: #15161a;
+  background-color: #17162f;
 }
 
 html[data-theme='ultra-dark'] body.dark .ant-drawer-content,
 html[data-theme='ultra-dark'] body.dark .ant-drawer-body {
-  background-color: #050507;
+  background-color: #0e0d1e;
 }
 
 body.dark .ant-drawer-body .drawer-menu,
@@ -368,4 +342,53 @@ body.dark .ant-drawer-body .drawer-menu .ant-menu-item-group-list {
 .drawer-menu .ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-item-disabled):hover {
   background-color: color-mix(in srgb, var(--ant-color-primary) 10%, transparent) !important;
   color: var(--ant-color-primary) !important;
+}
+
+/* IT_RUNNER brand accents */
+.brand-text,
+.drawer-brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--itr-navy);
+}
+
+body.dark .brand-text,
+body.dark .drawer-brand {
+  color: #ffffff;
+}
+
+.sider-nav .ant-menu-item-selected,
+.sider-utility .ant-menu-item-selected,
+.drawer-menu .ant-menu-item-selected {
+  position: relative;
+}
+
+.sider-nav .ant-menu-item-selected::before,
+.drawer-menu .ant-menu-item-selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--itr-violet), var(--itr-magenta));
+}
+
+body.dark .sider-nav .ant-menu-item-selected,
+body.dark .sider-utility .ant-menu-item-selected,
+body.dark .drawer-menu .ant-menu-item-selected {
+  background-color: rgba(105, 102, 201, 0.28) !important;
+  color: #ffffff !important;
+}
+
+body.dark .sider-nav .ant-menu-item-active:not(.ant-menu-item-selected),
+body.dark .sider-nav .ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-item-disabled):hover,
+body.dark
+  .sider-utility
+  .ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-item-disabled):hover,
+body.dark
+  .drawer-menu
+  .ant-menu-item:not(.ant-menu-item-selected):not(.ant-menu-item-disabled):hover {
+  color: var(--itr-lavender) !important;
 }

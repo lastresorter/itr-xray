@@ -15,9 +15,8 @@ import {
   DatabaseOutlined,
   DiscordOutlined,
   ExportOutlined,
-  GithubOutlined,
   GlobalOutlined,
-  HeartOutlined,
+  InfoCircleOutlined,
   ImportOutlined,
   LogoutOutlined,
   MailOutlined,
@@ -27,7 +26,6 @@ import {
   MoonOutlined,
   PushpinFilled,
   PushpinOutlined,
-  ReadOutlined,
   SafetyOutlined,
   SearchOutlined,
   SettingOutlined,
@@ -43,14 +41,13 @@ import { formatPanelVersion } from '@/lib/panel-version';
 import { pauseAnimationsUntilLeave, useTheme } from '@/hooks/useTheme';
 import { useAllSettings } from '@/api/queries/useAllSettings';
 import { useCommandPalette } from '@/components/command-palette/useCommandPalette';
+import AboutModal from '@/components/brand/AboutModal';
+import ItrLogo from '@/components/brand/ItrLogo';
 import './AppSidebar.css';
 
-const DONATE_URL = 'https://donate.sanaei.dev/';
 // The palette listens for Ctrl as well as Cmd, so the chip must not show a
 // Mac glyph to the Linux and Windows operators who are most of this panel's.
 const SHORTCUT_MODIFIER = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent) ? '⌘' : 'Ctrl';
-const DOCS_URL = 'https://docs.sanaei.dev/';
-const REPO_URL = 'https://github.com/MHSanaei/3x-ui';
 const LOGOUT_KEY = '__logout__';
 const RAIL_WIDTH = 72;
 const SIDER_WIDTH = 220;
@@ -87,51 +84,42 @@ const iconByName: Record<IconName, ComponentType> = {
   routing: SwapOutlined,
 };
 
-function DonateButton({ ariaLabel }: { ariaLabel: string }) {
+function AboutButton({ ariaLabel, onClick }: { ariaLabel: string; onClick: () => void }) {
   return (
-    <a
-      href={DONATE_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="sidebar-donate"
-      aria-label={ariaLabel}
-      title={ariaLabel}
-    >
-      <HeartOutlined />
-    </a>
-  );
-}
-
-function DocsButton({ ariaLabel }: { ariaLabel: string }) {
-  return (
-    <a
-      href={DOCS_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
       className="sidebar-docs"
       aria-label={ariaLabel}
       title={ariaLabel}
+      onClick={onClick}
     >
-      <ReadOutlined />
-    </a>
+      <InfoCircleOutlined />
+    </button>
   );
 }
 
-function VersionBadge({ version, collapsed }: { version: string; collapsed?: boolean }) {
+function VersionBadge({
+  version,
+  collapsed,
+  onClick,
+}: {
+  version: string;
+  collapsed?: boolean;
+  onClick: () => void;
+}) {
   if (!version) return null;
   const label = formatPanelVersion(version);
   return (
-    <a
-      href={REPO_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
       className="sider-version"
-      aria-label={`GitHub ${label}`}
+      aria-label={label}
       title={label}
+      onClick={onClick}
     >
-      <GithubOutlined />
+      <InfoCircleOutlined />
       {!collapsed && <span className="sider-version-text">{label}</span>}
-    </a>
+    </button>
   );
 }
 
@@ -190,6 +178,8 @@ export default function AppSidebar() {
   const [hovered, setHovered] = useState(() => hoveredAcrossRemounts);
   const [pinned, setPinned] = useState(readSidebarPinned);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const openAbout = useCallback(() => setAboutOpen(true), []);
   const railCollapsed = !hovered && !pinned;
   const railStyle = useMemo(
     () => ({ '--sider-rail': `${pinned ? SIDER_WIDTH : RAIL_WIDTH}px` }) as CSSProperties,
@@ -378,7 +368,9 @@ export default function AppSidebar() {
       >
         <div className="sider-brand">
           <div className="brand-block">
-            <span className="brand-text">{railCollapsed ? '3X' : '3X-UI'}</span>
+            <span className="brand-text">
+              <ItrLogo variant={railCollapsed ? 'mark' : 'word'} height={railCollapsed ? 15 : 13} />
+            </span>
           </div>
           {!railCollapsed && (
             <div className="brand-actions">
@@ -392,8 +384,7 @@ export default function AppSidebar() {
               >
                 {pinned ? <PushpinFilled /> : <PushpinOutlined />}
               </button>
-              <DocsButton ariaLabel={t('menu.docs') || 'Documentation'} />
-              <DonateButton ariaLabel={t('menu.donate') || 'Donate'} />
+              <AboutButton ariaLabel={t('about.title')} onClick={openAbout} />
               <ThemeCycleButton
                 id="theme-cycle"
                 isDark={isDark}
@@ -447,7 +438,7 @@ export default function AppSidebar() {
           onClick={onMenuClick}
         />
         <div className="sider-footer">
-          <VersionBadge version={panelVersion} collapsed={railCollapsed} />
+          <VersionBadge version={panelVersion} collapsed={railCollapsed} onClick={openAbout} />
         </div>
       </Layout.Sider>
 
@@ -466,11 +457,18 @@ export default function AppSidebar() {
       >
         <div className="drawer-header">
           <div className="brand-block">
-            <span className="drawer-brand">3X-UI</span>
+            <span className="drawer-brand">
+              <ItrLogo height={14} />
+            </span>
           </div>
           <div className="drawer-header-actions">
-            <DocsButton ariaLabel={t('menu.docs') || 'Documentation'} />
-            <DonateButton ariaLabel={t('menu.donate') || 'Donate'} />
+            <AboutButton
+              ariaLabel={t('about.title')}
+              onClick={() => {
+                setDrawerOpen(false);
+                openAbout();
+              }}
+            />
             <ThemeCycleButton
               id="theme-cycle-drawer"
               isDark={isDark}
@@ -532,9 +530,17 @@ export default function AppSidebar() {
           }}
         />
         <div className="drawer-footer">
-          <VersionBadge version={panelVersion} />
+          <VersionBadge
+            version={panelVersion}
+            onClick={() => {
+              setDrawerOpen(false);
+              openAbout();
+            }}
+          />
         </div>
       </Drawer>
+
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
 
       {!drawerOpen && (
         <button

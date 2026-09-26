@@ -2,6 +2,8 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router/dom';
 import { message } from 'antd';
 import 'antd/dist/reset.css';
+import '@fontsource-variable/inter/wght.css';
+import '@/styles/brand.css';
 import '@/styles/utils.css';
 import '@/styles/page-shell.css';
 import '@/styles/page-cards.css';

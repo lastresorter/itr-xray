@@ -13,7 +13,7 @@ describe('parseLogLine — SysLog (journalctl) formats', () => {
     );
     expect(r.stamp).toBe('Jun 08 23:57:28');
     expect(r.levelText).toBe('INFO');
-    expect(r.service).toBe('X-UI:');
+    expect(r.service).toBe('ITR:');
     expect(r.body).toBe('mtproto: started mtg for inbound 3 on 0.0.0.0:8443');
   });
 
@@ -70,7 +70,7 @@ describe('parseLogLine — app-log format (SysLog off)', () => {
     expect(r.date).toBe('2026/06/09');
     expect(r.time).toBe('00:35:09');
     expect(r.levelText).toBe('INFO');
-    expect(r.service).toBe('X-UI:');
+    expect(r.service).toBe('ITR:');
     expect(r.body).toBe('mtproto: started mtg for inbound 3 on 0.0.0.0:8443');
   });
 

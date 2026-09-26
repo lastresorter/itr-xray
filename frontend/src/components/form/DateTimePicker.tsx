@@ -32,7 +32,7 @@ const LIGHT_THEME = {
 
 const DARK_THEME = {
   primaryColor: '#1677ff',
-  backgroundColor: '#23252b',
+  backgroundColor: '#262550',
   borderColor: 'rgba(255, 255, 255, 0.12)',
   hoverColor: 'rgba(22, 119, 255, 0.18)',
   selectedTextColor: '#ffffff',
@@ -41,7 +41,7 @@ const DARK_THEME = {
 
 const ULTRA_DARK_THEME = {
   primaryColor: '#1677ff',
-  backgroundColor: '#101013',
+  backgroundColor: '#151430',
   borderColor: 'rgba(255, 255, 255, 0.08)',
   hoverColor: 'rgba(22, 119, 255, 0.16)',
   selectedTextColor: '#ffffff',

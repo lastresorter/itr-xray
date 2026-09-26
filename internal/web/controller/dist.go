@@ -93,6 +93,16 @@ func pwaHeadInjection(basePath, pageName string) []byte {
 	return []byte(`<link rel="manifest" href="` + htmlpkg.EscapeString(basePath+"manifest.webmanifest") + `"><script data-cfasync="false" defer src="` + htmlpkg.EscapeString(basePath+"pwa-register.js") + `"></script>`)
 }
 
+// brandIconInjection links the IT_RUNNER favicon on every served page,
+// including the public subscription page.
+func brandIconInjection(basePath string) []byte {
+	basePath = normalizeWebBasePath(basePath)
+	icons := htmlpkg.EscapeString(basePath + "icons/")
+	return []byte(`<link rel="icon" type="image/svg+xml" href="` + icons + `itr-xray.svg">` +
+		`<link rel="icon" type="image/png" sizes="32x32" href="` + icons + `itr-xray-32.png">` +
+		`<link rel="apple-touch-icon" href="` + icons + `itr-xray-192.png">`)
+}
+
 func serveDistPage(c *gin.Context, name string) {
 	body, err := fs.ReadFile(distFS, "dist/"+name)
 	if err != nil {
@@ -142,6 +152,7 @@ func serveDistPage(c *gin.Context, name string) {
 	inject := []byte(script)
 	inject = append(inject, csrfMeta...)
 	inject = append(inject, basePathMeta...)
+	inject = append(inject, brandIconInjection(basePath)...)
 	inject = append(inject, pwaHeadInjection(basePath, name)...)
 	inject = append(inject, []byte(`</head>`)...)
 	out := bytes.Replace(body, []byte("</head>"), inject, 1)

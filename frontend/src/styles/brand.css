@@ -1,0 +1,57 @@
+/* IT_RUNNER brand layer: fonts and heading typography.
+ *
+ * YFF Rare Mega is the IT_RUNNER display face (trial build, see
+ * README.md, раздел «Фирменный стиль»). It is wide by design, so it is used only for
+ * headings and short titles; body text, tables and forms stay on Inter. */
+
+@font-face {
+  font-family: 'ITR Rare';
+  src: url('../assets/fonts/yff-rare-mega-bold.woff2') format('woff2');
+  font-weight: 500 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ITR Rare';
+  src: url('../assets/fonts/yff-rare-mega-black.woff2') format('woff2');
+  font-weight: 801 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --itr-navy: #292852;
+  --itr-violet: #5956b1;
+  --itr-magenta: #b455ad;
+  --itr-lavender: #ced0e2;
+  --itr-gradient: linear-gradient(180deg, #2a2953 0%, #5956b1 100%);
+  --itr-font-display: 'ITR Rare', 'Inter Variable', Inter, sans-serif;
+  --itr-font-text:
+    'Inter Variable', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--itr-font-text);
+}
+
+h1,
+h2,
+h3,
+.ant-typography h1,
+.ant-typography h2,
+.ant-typography h3,
+.ant-modal-title,
+.ant-drawer-title,
+.ant-card-head-title,
+.ant-result-title {
+  font-family: var(--itr-font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Rare's wide caps overflow narrow card headers; keep them single-line. */
+.ant-card-head-title {
+  font-size: 13px;
+}
