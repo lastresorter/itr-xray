@@ -31,7 +31,8 @@ function applyDom(isDark: boolean, isUltra: boolean) {
 
 // module load so the document is in the right theme before React mounts.
 const initialDark = readBool(STORAGE_DARK, true);
-const initialUltra = readBool(STORAGE_ULTRA, false);
+// itr-xray: ultra-dark is the default theme for new browsers.
+const initialUltra = readBool(STORAGE_ULTRA, true);
 applyDom(initialDark, initialUltra);
 
 // IT_RUNNER palette (see README.md, раздел «Фирменный стиль»): navy surfaces taken from the

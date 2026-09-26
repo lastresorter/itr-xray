@@ -369,7 +369,11 @@ export default function AppSidebar() {
         <div className="sider-brand">
           <div className="brand-block">
             <span className="brand-text">
-              <ItrLogo variant={railCollapsed ? 'mark' : 'word'} height={railCollapsed ? 15 : 13} />
+              <ItrLogo
+                variant={railCollapsed ? 'itr' : 'dash'}
+                height={railCollapsed ? 12 : 10}
+                title={railCollapsed ? 'ITR' : 'IT-RUNNER'}
+              />
             </span>
           </div>
           {!railCollapsed && (
@@ -458,7 +462,7 @@ export default function AppSidebar() {
         <div className="drawer-header">
           <div className="brand-block">
             <span className="drawer-brand">
-              <ItrLogo height={14} />
+              <ItrLogo variant="dash" height={11} title="IT-RUNNER" />
             </span>
           </div>
           <div className="drawer-header-actions">

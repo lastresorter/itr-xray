@@ -35,7 +35,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/main/ins
 Установка конкретной версии:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v3.8.5/install.sh) v3.8.5
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v1.0.1/install.sh) v1.0.1
 ```
 
 > [!IMPORTANT]
@@ -87,11 +87,11 @@ itr-xray uninstall    удалить
 
 | Было (3x-ui) | Стало (itr-xray) |
 |---|---|
-| Текст «3X-UI» в боковом меню и на экране входа | Векторный логотип IT_RUNNER (SVG, буквы в контурах); в свёрнутом меню — знак `IT_` |
+| Текст «3X-UI» в боковом меню и на экране входа | Векторные логотипы (SVG, буквы в контурах): в развёрнутом боковом меню — `IT-RUNNER`, в свёрнутом — `ITR`, на экране входа и в «О программе» — `IT_RUNNER` |
 | Иконки `icons/3x-ui-*.png` | `icons/itr-xray-*.png` (16–512 px) и векторная `icons/itr-xray.svg` |
 | Иконки вкладки (favicon) не было | SVG-иконка + PNG-запасной вариант + `apple-touch-icon` на всех страницах, включая страницу подписки |
 | Манифест PWA «3x-ui», цвет `#1677ff` | «IT_RUNNER · itr-xray», фирменные цвета |
-| Синяя тема Ant Design | Фирменная палитра IT_RUNNER: тёмная, светлая и «ультратёмная» темы (см. [Фирменный стиль](#фирменный-стиль)) |
+| Синяя тема Ant Design, по умолчанию тёмная | Фирменная палитра IT_RUNNER: тёмная, светлая и «ультратёмная» темы (см. [Фирменный стиль](#фирменный-стиль)); **по умолчанию — ультратёмная** |
 | Экран входа в сине-розовой гамме | Градиент как на титульном слайде IT_RUNNER, фирменные цвета |
 | Системный шрифт | Inter для текста, YFF Rare для заголовков |
 | Кнопки «Донат» (donate.sanaei.dev) и «Документация» (docs.sanaei.dev), значок версии со ссылкой на GitHub 3x-ui | Кнопка и окно **«О программе»**: версия панели и строка «itr-xray использует open-source решение 3x-ui» со ссылкой на github.com/MHSanaei/3x-ui |
@@ -126,6 +126,7 @@ itr-xray uninstall    удалить
 | Имена сертификатов mTLS между узлами «3x-ui node mTLS CA», «3x-ui master» | «itr-xray node mTLS CA», «itr-xray master» |
 | User-Agent `3x-ui-outbound-sub/1.0`, `3x-ui-remote-routing/1.0`, `3x-ui-pia/1.0`, модель устройства WARP `x-ui` | `itr-xray-outbound-sub/1.0`, `itr-xray-remote-routing/1.0`, `itr-xray-pia/1.0`, `itr-xray` |
 | Метка сервиса в разборе журнала `X-UI:` | `ITR:` |
+| Версия панели `3.8.5` | `1.0.1` — собственная нумерация itr-xray |
 
 ### Пакет, установщик и сборка
 
@@ -177,8 +178,9 @@ systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && sys
 
 ## Релизы и версии
 
-- Версия itr-xray совпадает с версией 3x-ui, на которой она основана (сейчас `3.8.5`, файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`.
-- Выпуск релиза: создать и отправить тег, например `git tag v3.8.5 && git push origin v3.8.5`. Сценарий `.github/workflows/release.yml` соберёт архивы для всех архитектур и Windows и прикрепит их к релизу вместе с контрольными суммами.
+- У itr-xray собственная нумерация версий, не связанная с 3x-ui: сейчас `1.0.1` (файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`, поэтому суффиксы вроде `-beta` не использовать.
+- Установщик не ставит версии ниже `1.0.1` (порог `min_version` в `install.sh`).
+- Выпуск релиза: создать и отправить тег, например `git tag v1.0.1 && git push origin v1.0.1`. Сценарий `.github/workflows/release.yml` соберёт архивы для всех архитектур и Windows и прикрепит их к релизу вместе с контрольными суммами.
 - Канал разработки (`dev-latest`) обновляется ручным запуском «Release itr-xray» на ветке `main` (вкладка Actions → Run workflow).
 - Docker-образ собирается вручную: сценарий «Release itr-xray for Docker».
 
@@ -208,7 +210,7 @@ systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && sys
 
 | Файл | Что |
 |---|---|
-| `frontend/src/components/brand/ItrLogo.tsx` | Логотип и знак `IT_` как SVG-компонент (цвет — `currentColor`) |
+| `frontend/src/components/brand/ItrLogo.tsx` | Логотипы `IT_RUNNER`, `IT-RUNNER` и `ITR` как SVG-компонент (цвет — `currentColor`) |
 | `frontend/src/components/brand/AboutModal.tsx` | Окно «О программе» |
 | `frontend/src/hooks/useTheme.tsx` | Цвета тем Ant Design |
 | `frontend/src/styles/brand.css` | Шрифты и CSS-переменные `--itr-*` |
@@ -220,7 +222,7 @@ systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && sys
 
 ## Обновление из 3x-ui
 
-Репозиторий — полноценный форк с историей 3x-ui. Оригинал подключён как `upstream`. Его теги хранятся с префиксом `upstream/`, чтобы не пересекаться с тегами релизов itr-xray (например, `v3.8.5` есть и там, и здесь):
+Репозиторий — полноценный форк с историей 3x-ui. Оригинал подключён как `upstream`. Его теги хранятся с префиксом `upstream/`, чтобы не пересекаться с тегами релизов itr-xray:
 
 ```bash
 git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remote.upstream.tagOpt --no-tags
@@ -230,7 +232,7 @@ git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remo
 git fetch upstream refs/tags/v3.9.0:refs/tags/upstream/v3.9.0 && git merge upstream/v3.9.0
 ```
 
-Конфликты обычно бывают в файлах из таблиц выше: `install.sh`, `update.sh`, `itr-xray.sh`, `.github/workflows/release.yml`, `internal/config/config.go`, `frontend/src/hooks/useTheme.tsx`, `frontend/src/layouts/AppSidebar.tsx` и в файлах переводов. После слияния обновите `internal/config/version` и проверьте, что новые упоминания `x-ui` / `3x-ui` в скриптах тоже переименованы:
+Конфликты обычно бывают в файлах из таблиц выше: `install.sh`, `update.sh`, `itr-xray.sh`, `.github/workflows/release.yml`, `internal/config/config.go`, `frontend/src/hooks/useTheme.tsx`, `frontend/src/layouts/AppSidebar.tsx` и в файлах переводов. В `internal/config/version` при конфликте оставьте версию itr-xray и поднимите её (например, до `1.1.0`). Проверьте также, что новые упоминания `x-ui` / `3x-ui` в скриптах тоже переименованы:
 
 ```bash
 grep -rn "x-ui" install.sh update.sh itr-xray.sh
