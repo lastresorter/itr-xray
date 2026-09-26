@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
+	"github.com/lastresorter/itr-xray/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/util/common"
 )
 
 type SubLinkProvider interface {

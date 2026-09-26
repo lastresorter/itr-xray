@@ -5,9 +5,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/web/entity"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/middleware"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/session"
+	"github.com/lastresorter/itr-xray/internal/web/entity"
+	"github.com/lastresorter/itr-xray/internal/web/middleware"
+	"github.com/lastresorter/itr-xray/internal/web/session"
 
 	"github.com/gin-gonic/gin"
 )

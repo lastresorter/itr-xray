@@ -3,10 +3,10 @@ package job
 import (
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/tuic"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/tuic"
+	"github.com/lastresorter/itr-xray/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/xray"
 )
 
 type TuicJob struct {

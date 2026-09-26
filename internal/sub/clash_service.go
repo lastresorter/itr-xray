@@ -11,10 +11,10 @@ import (
 	"github.com/goccy/go-json"
 	yaml "github.com/goccy/go-yaml"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/amneziawg"
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/tuic"
-	wgutil "github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
+	"github.com/lastresorter/itr-xray/internal/amneziawg"
+	"github.com/lastresorter/itr-xray/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/tuic"
+	wgutil "github.com/lastresorter/itr-xray/internal/util/wireguard"
 )
 
 type SubClashService struct {

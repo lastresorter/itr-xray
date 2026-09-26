@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/crypto/nodetoken"
-	piaprotocol "github.com/mhsanaei/3x-ui/v3/internal/pia"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/crypto/nodetoken"
+	piaprotocol "github.com/lastresorter/itr-xray/internal/pia"
+	"github.com/lastresorter/itr-xray/internal/util/wireguard"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 var piaTokenAAD = []byte("settings/pia_token")

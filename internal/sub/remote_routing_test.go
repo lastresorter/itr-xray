@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 	yaml "github.com/goccy/go-yaml"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database"
 )
 
 func mergeRemoteClashRulesYAML(base map[string]any, raw string) error {

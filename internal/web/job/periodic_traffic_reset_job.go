@@ -5,9 +5,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/util/common"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 // periodicResetConcurrency bounds how many inbounds or clients one run resets at once:

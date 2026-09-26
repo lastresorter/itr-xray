@@ -17,10 +17,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/global"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/config"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/web/global"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 // PanelService provides business logic for panel management operations.

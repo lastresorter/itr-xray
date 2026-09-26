@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
+	"github.com/lastresorter/itr-xray/internal/config"
 )
 
 type ServerConfig struct {

@@ -127,6 +127,8 @@ itr-xray uninstall    удалить
 | Имена сертификатов mTLS между узлами «3x-ui node mTLS CA», «3x-ui master» | «itr-xray node mTLS CA», «itr-xray master» |
 | User-Agent `3x-ui-outbound-sub/1.0`, `3x-ui-remote-routing/1.0`, `3x-ui-pia/1.0`, модель устройства WARP `x-ui` | `itr-xray-outbound-sub/1.0`, `itr-xray-remote-routing/1.0`, `itr-xray-pia/1.0`, `itr-xray` |
 | Метка сервиса в разборе журнала `X-UI:` | `ITR:` |
+| Джейл, фильтр и действие fail2ban для ограничения по IP `3x-ipl` (`/etc/fail2ban/{jail,filter,action}.d/3x-ipl.conf`, `3x-ipl-backend.conf`) | `itr-xray-ipl` (`itr-xray-ipl.conf`, `itr-xray-ipl-backend.conf`) |
+| Журналы ограничения по IP `3xipl.log`, `3xipl-banned.log`, `3xipl-banned.prev.log` | `itr-xray-ipl.log`, `itr-xray-ipl-banned.log`, `itr-xray-ipl-banned.prev.log` |
 | Версия панели `3.8.5` | `1.0.1` — собственная нумерация itr-xray |
 
 ### Пакет, установщик и сборка
@@ -144,15 +146,14 @@ itr-xray uninstall    удалить
 | Smoke-тест установщика на каждый push | Только ручной запуск, пока репозиторий приватный |
 | Dependabot: отдельный PR на каждую зависимость, раз в неделю | Один сгруппированный PR на экосистему (Go, npm, GitHub Actions) раз в месяц; обновления безопасности приходят сразу |
 | Сценарии Actions: ИИ-ревью PR, разбор задач, CodeQL, мутационные тесты, деплой сайта документации | Удалены: без ключей и платных функций GitHub они не работают или относятся только к 3x-ui |
+| Путь Go-модуля `github.com/mhsanaei/3x-ui/v3` | `github.com/lastresorter/itr-xray` (все импорты, `go.mod`, флаги сборки в `release.yml`, настройки линтера) |
 | README на 7 языках | Этот README; оригинал — в `README.3x-ui.md` |
 
 ## Что намеренно не переименовано
 
 | Что | Почему |
 |---|---|
-| Путь Go-модуля `github.com/mhsanaei/3x-ui/v3` | Он стоит в каждом импорте (сотни файлов). Переименование сделало бы каждое обновление из 3x-ui сплошным конфликтом, а пользователю он не виден. |
 | Переменные окружения `XUI_*` (`XUI_PORT`, `XUI_DB_TYPE`, `XUI_DB_DSN`, `XUI_LOG_LEVEL` и др.) и `window.X_UI_*` во фронтенде | Это интерфейс настройки: на них завязаны скрипты, Docker, файлы окружения и документация 3x-ui. Смена имён сломала бы совместимость настроек, а пользователю они не видны. |
-| Джейл fail2ban `3x-ipl` и журналы `3xipl.log` / `3xipl-banned.log` | Связка «панель → журнал → fail2ban» для ограничения по IP. Имена внутренние, переименование ничего не даёт пользователю. |
 | Внутренние переменные в shell-скриптах (`xui_folder`, `xui_service` и т. п.) | Видны только в коде скриптов. |
 | Сторонние компоненты: `mtg-multi` (github.com/mhsanaei/mtg-multi), Xray-core, tuic-server | Это отдельные проекты, их бинарники скачиваются из их собственных релизов. |
 | Команда `migrate` («migrate from other/old x-ui») | Описывает перенос именно из x-ui. |
@@ -233,6 +234,14 @@ git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remo
 ```bash
 git fetch upstream refs/tags/v3.9.0:refs/tags/upstream/v3.9.0 && git merge upstream/v3.9.0
 ```
+
+Путь модуля у itr-xray свой, поэтому новые и изменённые Go-файлы из 3x-ui будут импортировать `github.com/mhsanaei/3x-ui/v3/...`. После слияния замените его:
+
+```bash
+grep -rlI "github.com/mhsanaei/3x-ui/v3" --include='*.go' . | xargs perl -pi -e 's#github.com/mhsanaei/3x-ui/v3#github.com/lastresorter/itr-xray#g'
+```
+
+То же касается имён fail2ban (`3x-ipl`, `3xipl`) в `itr-xray.sh`, `DockerEntrypoint.sh` и `internal/xray/process.go`.
 
 Конфликты обычно бывают в файлах из таблиц выше: `install.sh`, `update.sh`, `itr-xray.sh`, `.github/workflows/release.yml`, `internal/config/config.go`, `frontend/src/hooks/useTheme.tsx`, `frontend/src/layouts/AppSidebar.tsx` и в файлах переводов. В `internal/config/version` при конфликте оставьте версию itr-xray и поднимите её (например, до `1.1.0`). Проверьте также, что новые упоминания `x-ui` / `3x-ui` в скриптах тоже переименованы:
 

@@ -14,12 +14,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/util/common"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/locale"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/middleware"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/network"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/util/common"
+	"github.com/lastresorter/itr-xray/internal/web/locale"
+	"github.com/lastresorter/itr-xray/internal/web/middleware"
+	"github.com/lastresorter/itr-xray/internal/web/network"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 
 	"github.com/gin-gonic/gin"
 )

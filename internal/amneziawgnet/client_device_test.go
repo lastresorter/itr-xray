@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/amneziawg"
+	"github.com/lastresorter/itr-xray/internal/amneziawg"
 
-	wgutil "github.com/mhsanaei/3x-ui/v3/internal/util/wireguard"
+	wgutil "github.com/lastresorter/itr-xray/internal/util/wireguard"
 )
 
 // clientDeviceTestInstance builds a minimal valid client instance with one

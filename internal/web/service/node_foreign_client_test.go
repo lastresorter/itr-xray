@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray"
+	"github.com/lastresorter/itr-xray/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/xray"
 
 	"gorm.io/gorm"
 )

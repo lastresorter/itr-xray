@@ -5,10 +5,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	ldaputil "github.com/mhsanaei/3x-ui/v3/internal/util/ldap"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	ldaputil "github.com/lastresorter/itr-xray/internal/util/ldap"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 var DefaultTruthyValues = []string{"true", "1", "yes", "on"}

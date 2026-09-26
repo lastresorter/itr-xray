@@ -1,26 +1,26 @@
 #!/bin/sh
 
-# Start fail2ban with the 3x-ipl jail
+# Start fail2ban with the itr-xray-ipl jail
 if [ "$XUI_ENABLE_FAIL2BAN" = "true" ]; then
     LOG_FOLDER="${XUI_LOG_FOLDER:-/var/log/itr-xray}"
     mkdir -p "$LOG_FOLDER"
-    touch "$LOG_FOLDER/3xipl.log" "$LOG_FOLDER/3xipl-banned.log"
+    touch "$LOG_FOLDER/itr-xray-ipl.log" "$LOG_FOLDER/itr-xray-ipl-banned.log"
 
     mkdir -p /etc/fail2ban/jail.d /etc/fail2ban/filter.d /etc/fail2ban/action.d
 
-    cat > /etc/fail2ban/jail.d/3x-ipl.conf << EOF
-[3x-ipl]
+    cat > /etc/fail2ban/jail.d/itr-xray-ipl.conf << EOF
+[itr-xray-ipl]
 enabled=true
 backend=auto
-filter=3x-ipl
-action=3x-ipl
-logpath=$LOG_FOLDER/3xipl.log
+filter=itr-xray-ipl
+action=itr-xray-ipl
+logpath=$LOG_FOLDER/itr-xray-ipl.log
 maxretry=1
 findtime=32
 bantime=30m
 EOF
 
-    cat > /etc/fail2ban/filter.d/3x-ipl.conf << 'EOF'
+    cat > /etc/fail2ban/filter.d/itr-xray-ipl.conf << 'EOF'
 [Definition]
 datepattern = ^%%Y/%%m/%%d %%H:%%M:%%S
 failregex   = \[LIMIT_IP\]\s*Email\s*=\s*<F-USER>.+</F-USER>\s*\|\|\s*Disconnecting OLD IP\s*=\s*<ADDR>\s*\|\|\s*Timestamp\s*=\s*\d+
@@ -37,7 +37,7 @@ EOF
     EXEMPT_PORTS="$SSH_PORTS"
     [ -n "$PANEL_PORT" ] && EXEMPT_PORTS="$EXEMPT_PORTS,$PANEL_PORT"
 
-    cat > /etc/fail2ban/action.d/3x-ipl.conf << EOF
+    cat > /etc/fail2ban/action.d/itr-xray-ipl.conf << EOF
 [INCLUDES]
 before = iptables-allports.conf
 
@@ -54,11 +54,11 @@ actioncheck = <iptables> -n -L <chain> | grep -q 'f2b-<name>[ \t]'
 
 actionban = <iptables> -I f2b-<name> 1 -s <ip> -p tcp -m multiport ! --dports <exemptports> -j <blocktype>
             <iptables> -I f2b-<name> 1 -s <ip> -p udp -m multiport ! --dports <exemptports> -j <blocktype>
-            echo "\$(date +"%%Y/%%m/%%d %%H:%%M:%%S")   BAN   [Email] = <F-USER> [IP] = <ip> banned for <bantime> seconds." >> $LOG_FOLDER/3xipl-banned.log
+            echo "\$(date +"%%Y/%%m/%%d %%H:%%M:%%S")   BAN   [Email] = <F-USER> [IP] = <ip> banned for <bantime> seconds." >> $LOG_FOLDER/itr-xray-ipl-banned.log
 
 actionunban = <iptables> -D f2b-<name> -s <ip> -p tcp -m multiport ! --dports <exemptports> -j <blocktype>
               <iptables> -D f2b-<name> -s <ip> -p udp -m multiport ! --dports <exemptports> -j <blocktype>
-              echo "\$(date +"%%Y/%%m/%%d %%H:%%M:%%S")   UNBAN   [Email] = <F-USER> [IP] = <ip> unbanned." >> $LOG_FOLDER/3xipl-banned.log
+              echo "\$(date +"%%Y/%%m/%%d %%H:%%M:%%S")   UNBAN   [Email] = <F-USER> [IP] = <ip> unbanned." >> $LOG_FOLDER/itr-xray-ipl-banned.log
 
 [Init]
 name = default

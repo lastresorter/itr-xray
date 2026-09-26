@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/eventbus"
+	"github.com/lastresorter/itr-xray/internal/eventbus"
 )
 
 func TestRateLimiterAllow(t *testing.T) {

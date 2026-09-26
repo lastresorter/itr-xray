@@ -8,13 +8,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/entity"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/global"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service/panel"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/websocket"
+	"github.com/lastresorter/itr-xray/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/web/entity"
+	"github.com/lastresorter/itr-xray/internal/web/global"
+	"github.com/lastresorter/itr-xray/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/web/service/panel"
+	"github.com/lastresorter/itr-xray/internal/web/websocket"
 
 	"github.com/gin-gonic/gin"
 )

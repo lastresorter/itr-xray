@@ -14,8 +14,8 @@ import (
 	"gvisor.dev/gvisor/pkg/tcpip"
 	"gvisor.dev/gvisor/pkg/tcpip/adapters/gonet"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/amneziawg"
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/amneziawg"
+	"github.com/lastresorter/itr-xray/internal/logger"
 )
 
 // DefaultTunnelDNSServer resolves domain targets through outbound netstack.

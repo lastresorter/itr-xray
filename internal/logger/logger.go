@@ -13,7 +13,7 @@ import (
 
 	"github.com/op/go-logging"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/config"
+	"github.com/lastresorter/itr-xray/internal/config"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )

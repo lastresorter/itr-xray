@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/crypto/nodetoken"
-	"github.com/mhsanaei/3x-ui/v3/internal/database"
-	piaprotocol "github.com/mhsanaei/3x-ui/v3/internal/pia"
+	"github.com/lastresorter/itr-xray/internal/crypto/nodetoken"
+	"github.com/lastresorter/itr-xray/internal/database"
+	piaprotocol "github.com/lastresorter/itr-xray/internal/pia"
 )
 
 type fakePiaAuth struct{ token string }

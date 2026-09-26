@@ -95,8 +95,8 @@ fi
 xui_service="${XUI_SERVICE:=/etc/systemd/system}"
 log_folder="${XUI_LOG_FOLDER:=/var/log/itr-xray}"
 mkdir -p "${log_folder}"
-iplimit_log_path="${log_folder}/3xipl.log"
-iplimit_banned_log_path="${log_folder}/3xipl-banned.log"
+iplimit_log_path="${log_folder}/itr-xray-ipl.log"
+iplimit_banned_log_path="${log_folder}/itr-xray-ipl-banned.log"
 
 confirm() {
     if [[ $# > 1 ]]; then
@@ -2205,7 +2205,7 @@ iplimit_main() {
         3)
             confirm "Proceed with Unbanning everyone from IP Limit jail?" "y"
             if [[ $? == 0 ]]; then
-                fail2ban-client reload --restart --unban 3x-ipl
+                fail2ban-client reload --restart --unban itr-xray-ipl
                 truncate -s 0 "${iplimit_banned_log_path}"
                 echo -e "${green}All users Unbanned successfully.${plain}"
                 iplimit_main
@@ -2222,7 +2222,7 @@ iplimit_main() {
             read -rp "Enter the IP address you want to ban: " ban_ip
             ip_validation
             if [[ $ban_ip =~ $ipv4_regex || $ban_ip =~ $ipv6_regex ]]; then
-                fail2ban-client set 3x-ipl banip "$ban_ip"
+                fail2ban-client set itr-xray-ipl banip "$ban_ip"
                 echo -e "${green}IP Address ${ban_ip} has been banned successfully.${plain}"
             else
                 echo -e "${red}Invalid IP address format! Please try again.${plain}"
@@ -2233,7 +2233,7 @@ iplimit_main() {
             read -rp "Enter the IP address you want to unban: " unban_ip
             ip_validation
             if [[ $unban_ip =~ $ipv4_regex || $unban_ip =~ $ipv6_regex ]]; then
-                fail2ban-client set 3x-ipl unbanip "$unban_ip"
+                fail2ban-client set itr-xray-ipl unbanip "$unban_ip"
                 echo -e "${green}IP Address ${unban_ip} has been unbanned successfully.${plain}"
             else
                 echo -e "${red}Invalid IP address format! Please try again.${plain}"
@@ -2285,7 +2285,7 @@ setup_fail2ban_iplimit() {
         # minimal server images (Debian 12+, Ubuntu 24+, fresh RHEL-family).
         # Without `nft` in PATH the default sshd jail fails to ban with
         #   stderr: '/bin/sh: 1: nft: not found'
-        # even though our own 3x-ipl jail uses iptables. Bundling the binary
+        # even though our own itr-xray-ipl jail uses iptables. Bundling the binary
         # at install time prevents that confusing log spam for new installs.
         case "${release}" in
             ubuntu)
@@ -2399,9 +2399,9 @@ remove_iplimit() {
     read -rp "Choose an option: " num
     case "$num" in
         1)
-            rm -f /etc/fail2ban/filter.d/3x-ipl.conf
-            rm -f /etc/fail2ban/action.d/3x-ipl.conf
-            rm -f /etc/fail2ban/jail.d/3x-ipl.conf
+            rm -f /etc/fail2ban/filter.d/itr-xray-ipl.conf
+            rm -f /etc/fail2ban/action.d/itr-xray-ipl.conf
+            rm -f /etc/fail2ban/jail.d/itr-xray-ipl.conf
             if [[ $release == "alpine" ]]; then
                 rc-service fail2ban restart
             else
@@ -2479,7 +2479,7 @@ show_banlog() {
 
     if [[ -f "$system_log" ]]; then
         echo -e "${green}Recent system ban activities from fail2ban.log:${plain}"
-        grep "3x-ipl" "$system_log" | grep -E "Ban|Unban" | tail -n 10 || echo -e "${yellow}No recent system ban activities found${plain}"
+        grep "itr-xray-ipl" "$system_log" | grep -E "Ban|Unban" | tail -n 10 || echo -e "${yellow}No recent system ban activities found${plain}"
         echo ""
     fi
 
@@ -2495,7 +2495,7 @@ show_banlog() {
     fi
 
     echo -e "\n${green}Current jail status:${plain}"
-    fail2ban-client status 3x-ipl || echo -e "${yellow}Unable to get jail status${plain}"
+    fail2ban-client status itr-xray-ipl || echo -e "${yellow}Unable to get jail status${plain}"
 }
 
 create_iplimit_jails() {
@@ -2509,25 +2509,25 @@ create_iplimit_jails() {
     # survives package upgrades. Only the stock 'backend = auto' is overridden.
     if [[ ( "${release}" == "debian" && ${os_version} -ge 12 ) || ( "${release}" == "ubuntu" && ${os_version} -ge 2200 ) ]] &&
         sed -n '0,/action =/p' /etc/fail2ban/jail.conf | grep -q '^backend = auto'; then
-        cat << EOF > /etc/fail2ban/jail.d/3x-ipl-backend.conf
+        cat << EOF > /etc/fail2ban/jail.d/itr-xray-ipl-backend.conf
 [DEFAULT]
 backend = systemd
 EOF
     fi
 
-    cat << EOF > /etc/fail2ban/jail.d/3x-ipl.conf
-[3x-ipl]
+    cat << EOF > /etc/fail2ban/jail.d/itr-xray-ipl.conf
+[itr-xray-ipl]
 enabled=true
 backend=auto
-filter=3x-ipl
-action=3x-ipl
+filter=itr-xray-ipl
+action=itr-xray-ipl
 logpath=${iplimit_log_path}
 maxretry=1
 findtime=32
 bantime=${bantime}m
 EOF
 
-    cat << EOF > /etc/fail2ban/filter.d/3x-ipl.conf
+    cat << EOF > /etc/fail2ban/filter.d/itr-xray-ipl.conf
 [Definition]
 datepattern = ^%%Y/%%m/%%d %%H:%%M:%%S
 failregex   = \[LIMIT_IP\]\s*Email\s*=\s*<F-USER>.+</F-USER>\s*\|\|\s*Disconnecting OLD IP\s*=\s*<ADDR>\s*\|\|\s*Timestamp\s*=\s*\d+
@@ -2546,7 +2546,7 @@ EOF
     local exempt_ports="${ssh_ports}"
     [[ -n "${panel_port}" ]] && exempt_ports="${exempt_ports},${panel_port}"
 
-    cat << EOF > /etc/fail2ban/action.d/3x-ipl.conf
+    cat << EOF > /etc/fail2ban/action.d/itr-xray-ipl.conf
 [INCLUDES]
 before = iptables-allports.conf
 
@@ -2585,10 +2585,10 @@ iplimit_remove_conflicts() {
     )
 
     for file in "${jail_files[@]}"; do
-        # Check for [3x-ipl] config in jail file then remove it
-        if test -f "${file}" && grep -qw '3x-ipl' ${file}; then
-            sed -i "/\[3x-ipl\]/,/^$/d" ${file}
-            echo -e "${yellow}Removing conflicts of [3x-ipl] in jail (${file})!${plain}\n"
+        # Check for [itr-xray-ipl] config in jail file then remove it
+        if test -f "${file}" && grep -qw 'itr-xray-ipl' ${file}; then
+            sed -i "/\[itr-xray-ipl\]/,/^$/d" ${file}
+            echo -e "${yellow}Removing conflicts of [itr-xray-ipl] in jail (${file})!${plain}\n"
         fi
     done
 }

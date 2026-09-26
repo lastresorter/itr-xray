@@ -1,8 +1,8 @@
 package sub
 
 import (
-	"github.com/mhsanaei/3x-ui/v3/internal/logger"
-	"github.com/mhsanaei/3x-ui/v3/internal/xray/dnsconf"
+	"github.com/lastresorter/itr-xray/internal/logger"
+	"github.com/lastresorter/itr-xray/internal/xray/dnsconf"
 )
 
 // The subJsonDns setting holds either a full xray dns block or a bare array of

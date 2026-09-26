@@ -3,7 +3,7 @@ package tuic
 import (
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/database/model"
 )
 
 func TestInstanceFromInbound(t *testing.T) {

@@ -14,8 +14,8 @@ import (
 	"time"
 	"unicode/utf16"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/web/locale"
-	"github.com/mhsanaei/3x-ui/v3/internal/web/service"
+	"github.com/lastresorter/itr-xray/internal/web/locale"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 const (

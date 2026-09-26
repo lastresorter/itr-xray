@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/mhsanaei/3x-ui/v3/internal/database/model"
+	"github.com/lastresorter/itr-xray/internal/database/model"
 )
 
 // TestNodeDelete_BlocksWhenInboundsAttached guards DB-002: a node that still
