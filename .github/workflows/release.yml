@@ -7,27 +7,6 @@ on:
   push:
     tags:
       - "v*.*.*"
-    paths:
-      - "**.go"
-      - "go.mod"
-      - "go.sum"
-      - "**.sh"
-      - "frontend/**"
-      - "itr-xray.service.debian"
-      - "itr-xray.service.arch"
-      - "itr-xray.service.rhel"
-      - ".github/workflows/release.yml"
-  pull_request:
-    paths:
-      - "**.go"
-      - "go.mod"
-      - "go.sum"
-      - "**.sh"
-      - "frontend/**"
-      - "itr-xray.service.debian"
-      - "itr-xray.service.arch"
-      - "itr-xray.service.rhel"
-      - ".github/workflows/release.yml"
 
 jobs:
   build:
