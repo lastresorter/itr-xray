@@ -1,231 +1,253 @@
-[English](/README.md) | [فارسی](/README.fa_IR.md) | [العربية](/README.ar_EG.md) | [中文](/README.zh_CN.md) | [Español](/README.es_ES.md) | [Русский](/README.ru_RU.md) | [Türkçe](/README.tr_TR.md)
-
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./media/3x-ui-dark.png">
-    <img alt="3x-ui" src="./media/3x-ui-light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./media/brand/itr-runner-logo-white.svg">
+    <img alt="IT_RUNNER" src="./media/brand/itr-runner-logo-navy.svg" width="360">
   </picture>
 </p>
 
-<p align="center">
-  <a href="https://github.com/MHSanaei/3x-ui/releases"><img src="https://img.shields.io/github/v/release/mhsanaei/3x-ui" alt="Release"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/actions"><img src="https://img.shields.io/github/actions/workflow/status/mhsanaei/3x-ui/release.yml.svg" alt="Build"></a>
-  <a href="#"><img src="https://img.shields.io/github/go-mod/go-version/mhsanaei/3x-ui.svg" alt="GO Version"></a>
-  <a href="https://github.com/MHSanaei/3x-ui/releases/latest"><img src="https://img.shields.io/github/downloads/mhsanaei/3x-ui/total.svg" alt="Downloads"></a>
-  <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL%20V3-blue.svg?longCache=true" alt="License"></a>
-  <a href="https://pkg.go.dev/github.com/mhsanaei/3x-ui/v3"><img src="https://pkg.go.dev/badge/github.com/mhsanaei/3x-ui/v3.svg" alt="Go Reference"></a>
-  <a href="https://docs.sanaei.dev"><img src="https://img.shields.io/badge/docs-docs.sanaei.dev-22d3ee" alt="Documentation"></a>
-</p>
+<h3 align="center">itr-xray — панель управления Xray от IT_RUNNER</h3>
 
-**3X-UI** is an advanced, open-source web control panel for managing [Xray-core](https://github.com/XTLS/Xray-core) servers. It provides a clean, multi-language interface for deploying, configuring, and monitoring a wide range of proxy and VPN protocols — from a single VPS to multi-node deployments.
+**itr-xray** — это веб-панель для управления серверами [Xray-core](https://github.com/XTLS/Xray-core) в фирменном стиле IT_RUNNER. Функциональность полностью взята из open-source проекта [3x-ui](https://github.com/MHSanaei/3x-ui) версии **v3.8.5**. Переработаны оформление интерфейса и имена в системе: команда, служба, пути, пакет и установщик.
 
-Built as an enhanced fork of the original X-UI project, 3X-UI adds broader protocol support, improved stability, per-client traffic accounting, and many quality-of-life features.
+Оригинальный README 3x-ui со списком возможностей лежит в [README.3x-ui.md](README.3x-ui.md).
+
+---
+
+## Содержание
+
+- [Установка на сервер](#установка-на-сервер)
+- [Локальный просмотр через Docker](#локальный-просмотр-через-docker)
+- [Управление](#управление)
+- [Что заменено относительно 3x-ui](#что-заменено-относительно-3x-ui)
+- [Что намеренно не переименовано](#что-намеренно-не-переименовано)
+- [Переход с установленного 3x-ui](#переход-с-установленного-3x-ui)
+- [Релизы и версии](#релизы-и-версии)
+- [Фирменный стиль](#фирменный-стиль)
+- [Обновление из 3x-ui](#обновление-из-3x-ui)
+- [Лицензия](#лицензия)
+
+---
+
+## Установка на сервер
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/main/install.sh)
+```
+
+Установка конкретной версии:
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v3.8.5/install.sh) v3.8.5
+```
 
 > [!IMPORTANT]
-> This project is intended for personal use only. Please do not use it for illegal purposes or in a production environment.
+> Пока репозиторий приватный, эти команды не работают: GitHub не отдаёт скрипт и архивы релиза без авторизации. Установщик заработает, как только репозиторий станет публичным. Ничего менять в коде при этом не нужно.
 
-## Features
+Поддерживаемые архитектуры: `amd64`, `arm64`, `armv7`, `armv6`, `armv5`, `386`, `s390x`. Дистрибутивы — те же, что у 3x-ui (Debian/Ubuntu, RHEL-семейство, Arch, Alpine и др.).
 
-- **Multi-protocol inbounds** — VLESS, VMess, Trojan, Shadowsocks, WireGuard, AmneziaWG, TUIC v5, Hysteria2, MTProto, HTTP, SOCKS (Mixed), Dokodemo-door / Tunnel, and TUN.
-- **Modern transports & security** — TCP (Raw), mKCP, WebSocket, gRPC, HTTPUpgrade, and XHTTP, secured with TLS, XTLS, and REALITY.
-- **AmneziaWG built in** — DPI-resistant WireGuard runs inside the panel on a userspace network stack, with no kernel module, DKMS, or extra packages to install.
-- **TUIC v5 sidecar** — High-performance QUIC-based proxy with native UDP relay traffic metering, 0-RTT handshakes, and BBR congestion control.
-- **MTProto proxies** — per-client FakeTLS secrets, ad-tags, and quotas, applied live without dropping existing connections.
-- **Fallbacks** — serve multiple protocols on a single port (e.g. VLESS and Trojan on 443) using Xray's fallback support.
-- **Per-client management** — traffic quotas, expiry dates, IP limits with trusted-address exemptions, HWID device limits, scheduled renewal cycles, live online status, and one-click share links, QR codes, and subscriptions.
-- **Traffic statistics** — per inbound, per client, and per outbound, with reset controls.
-- **Multi-node support** — manage and scale across multiple servers from a single panel, including cloning inbounds onto other nodes.
-- **Outbound & routing** — WARP, NordVPN, PIA, custom routing rules, load balancers with balancer-to-balancer fallback, and outbound proxy chaining. Bundled geosite and geoip categories are browsable straight from the rule editor.
-- **Built-in subscription server** — raw, JSON, and Clash output, auto-selected from the client's User-Agent, plus [custom page templates](docs/custom-subscription-templates.md).
-- **Telegram and Discord bots** for remote monitoring and management.
-- **RESTful API** with scoped, optionally expiring tokens and an in-panel API reference.
-- **Installable panel (PWA)** — pin 3X-UI to a desktop or phone home screen.
-- **Flexible storage** — SQLite (default) or PostgreSQL.
-- **13 UI languages** with dark and light themes.
-- **Fail2ban integration** for enforcing per-client IP limits.
+## Локальный просмотр через Docker
 
-## Screenshots
-
-<details>
-<summary>Click to expand</summary>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./media/01-overview-dark.png">
-  <img alt="Overview" src="./media/01-overview-light.png">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./media/02-add-inbound-dark.png">
-  <img alt="Inbounds" src="./media/02-add-inbound-light.png">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./media/03-add-client-dark.png">
-  <img alt="Add client" src="./media/03-add-client-light.png">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./media/05-add-nodes-dark.png">
-  <img alt="Configs" src="./media/05-add-nodes-light.png">
-</picture>
-
-</details>
-
-## Quick Start
+Нужен запущенный Docker Desktop. Из корня репозитория:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+docker compose up -d --build
 ```
 
-To install a specific version, append its tag (e.g. `v3.7.0`):
+Первая сборка занимает несколько минут: собираются фронтенд и Go-бинарник, скачивается Xray. После сборки откройте <http://localhost:2053>. Логин и пароль — `admin` / `admin`, в настройках панели их нужно сменить.
+
+Остановить и удалить контейнер:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v3.7.0
+docker compose down
 ```
 
-To install the rolling **dev** build (latest per-commit pre-release from `main`, not a stable release), pass `dev-latest`:
+Данные контейнера лежат в папках `db/`, `cert/` и `acme/` рядом с `docker-compose.yml`. Если удалить `db/`, панель запустится с чистой базой.
+
+## Управление
+
+После установки на сервере доступна команда `itr-xray`. Без аргументов она открывает меню, также есть подкоманды:
+
+```
+itr-xray              меню управления
+itr-xray start        запустить панель
+itr-xray stop         остановить
+itr-xray restart      перезапустить
+itr-xray status       статус
+itr-xray settings     текущие настройки (порт, путь, логин)
+itr-xray log          журнал
+itr-xray update       обновить до последнего релиза
+itr-xray uninstall    удалить
+```
+
+Служба systemd называется `itr-xray` (`systemctl status itr-xray`, `journalctl -u itr-xray`).
+
+---
+
+## Что заменено относительно 3x-ui
+
+### Интерфейс
+
+| Было (3x-ui) | Стало (itr-xray) |
+|---|---|
+| Текст «3X-UI» в боковом меню и на экране входа | Векторный логотип IT_RUNNER (SVG, буквы в контурах); в свёрнутом меню — знак `IT_` |
+| Иконки `icons/3x-ui-*.png` | `icons/itr-xray-*.png` (16–512 px) и векторная `icons/itr-xray.svg` |
+| Иконки вкладки (favicon) не было | SVG-иконка + PNG-запасной вариант + `apple-touch-icon` на всех страницах, включая страницу подписки |
+| Манифест PWA «3x-ui», цвет `#1677ff` | «IT_RUNNER · itr-xray», фирменные цвета |
+| Синяя тема Ant Design | Фирменная палитра IT_RUNNER: тёмная, светлая и «ультратёмная» темы (см. [Фирменный стиль](#фирменный-стиль)) |
+| Экран входа в сине-розовой гамме | Градиент как на титульном слайде IT_RUNNER, фирменные цвета |
+| Системный шрифт | Inter для текста, YFF Rare для заголовков |
+| Кнопки «Донат» (donate.sanaei.dev) и «Документация» (docs.sanaei.dev), значок версии со ссылкой на GitHub 3x-ui | Кнопка и окно **«О программе»**: версия панели и строка «itr-xray использует open-source решение 3x-ui» со ссылкой на github.com/MHSanaei/3x-ui |
+| Заголовок вкладки «3X-UI» | «IT_RUNNER» |
+| Издатель (issuer) в QR-коде двухфакторной авторизации «3x-ui» | «IT_RUNNER» |
+| Строки с «3X-UI» во всех 13 языках (Telegram-бот, Discord, диалог обновления и др.) | «itr-xray» |
+| Имя скачиваемого журнала `x-ui.log` | `itr-xray.log` |
+| Ссылка на документацию шаблонов подписки в репозитории 3x-ui | Та же страница в `lastresorter/itr-xray` |
+
+### Сервер и система
+
+| Было (3x-ui) | Стало (itr-xray) |
+|---|---|
+| Команда управления `/usr/bin/x-ui` | `/usr/bin/itr-xray` |
+| Скрипт управления `x-ui.sh` | `itr-xray.sh` |
+| Служба systemd `x-ui.service` (`x-ui.service.debian/.arch/.rhel`) | `itr-xray.service` (`itr-xray.service.debian/.arch/.rhel`) |
+| Служба OpenRC `/etc/init.d/x-ui` (`x-ui.rc`) | `/etc/init.d/itr-xray` (`itr-xray.rc`) |
+| Папка программы `/usr/local/x-ui/`, бинарник `x-ui` | `/usr/local/itr-xray/`, бинарник `itr-xray` |
+| Папка данных `/etc/x-ui/` | `/etc/itr-xray/` |
+| База данных `x-ui.db` | `itr-xray.db` |
+| Логи `/var/log/x-ui/` | `/var/log/itr-xray/` |
+| Файл окружения `/etc/default/x-ui` (`/etc/conf.d/x-ui`, `/etc/sysconfig/x-ui`) | `/etc/default/itr-xray` (`/etc/conf.d/itr-xray`, `/etc/sysconfig/itr-xray`) |
+| Ключ шифрования токенов узлов `/etc/x-ui/node_token_key.json` | `/etc/itr-xray/node_token_key.json` |
+| Настройка BBR `/etc/sysctl.d/99-bbr-x-ui.conf` | `/etc/sysctl.d/99-bbr-itr-xray.conf` |
+| Cookie сессии `3x-ui` | `itr-xray` |
+| Имена резервных копий и временных файлов `x-ui.db`, `x-ui.dump`, `.x-ui-backup-*`, `x-ui-migration-*` | `itr-xray.db`, `itr-xray.dump`, `.itr-xray-backup-*`, `itr-xray-migration-*` |
+| Журнал в панели читается из `journalctl -u x-ui` | `journalctl -u itr-xray` |
+| Самообновление панели из `MHSanaei/3x-ui` (GitHub API релизов и `update.sh`) | Из `lastresorter/itr-xray` |
+| Временная служба обновления `x-ui-web-update-*` | `itr-xray-web-update-*` |
+| Тестовое письмо «[3x-ui] Test email», тестовое сообщение Telegram «Test message from 3x-ui» | «[IT_RUNNER] Test email», «Test message from IT_RUNNER itr-xray» |
+| Подпись и имя устройства в Discord «3x-ui» | «IT_RUNNER» / «itr-xray» |
+| Имена сертификатов mTLS между узлами «3x-ui node mTLS CA», «3x-ui master» | «itr-xray node mTLS CA», «itr-xray master» |
+| User-Agent `3x-ui-outbound-sub/1.0`, `3x-ui-remote-routing/1.0`, `3x-ui-pia/1.0`, модель устройства WARP `x-ui` | `itr-xray-outbound-sub/1.0`, `itr-xray-remote-routing/1.0`, `itr-xray-pia/1.0`, `itr-xray` |
+| Метка сервиса в разборе журнала `X-UI:` | `ITR:` |
+
+### Пакет, установщик и сборка
+
+| Было (3x-ui) | Стало (itr-xray) |
+|---|---|
+| Архив релиза `x-ui-linux-<arch>.tar.gz` (+ `.sha256`), внутри папка `x-ui/` | `itr-xray-linux-<arch>.tar.gz` (+ `.sha256`), внутри папка `itr-xray/` |
+| Архив для Windows `x-ui-windows-amd64.zip` | `itr-xray-windows-amd64.zip` |
+| `install.sh` / `update.sh` качают из `MHSanaei/3x-ui` | Качают из `lastresorter/itr-xray` |
+| Сборка релиза на каждый push в любую ветку | Только по тегу `v*.*.*` или ручному запуску (экономия минут GitHub Actions в приватном репозитории) |
+| Релизы по тегу публикуются как pre-release | Как обычные релизы: иначе `install.sh` не находит их через `releases/latest` |
+| Канал разработки `dev-latest` обновляется на каждый push в `main` | Обновляется при ручном запуске сборки на `main` |
+| Docker-образы `hsanaeii/3x-ui` (Docker Hub) и `ghcr.io/mhsanaei/3x-ui` | Только `ghcr.io/lastresorter/itr-xray`, сборка вручную |
+| Контейнер `3xui_app`, часовой пояс `Asia/Tehran` | Контейнер `itr-xray`, часовой пояс `Europe/Moscow` |
+| Smoke-тест установщика на каждый push | Только ручной запуск, пока репозиторий приватный |
+| Сценарии Actions: ИИ-ревью PR, разбор задач, CodeQL, мутационные тесты, деплой сайта документации | Удалены: без ключей и платных функций GitHub они не работают или относятся только к 3x-ui |
+| README на 7 языках | Этот README; оригинал — в `README.3x-ui.md` |
+
+## Что намеренно не переименовано
+
+| Что | Почему |
+|---|---|
+| Путь Go-модуля `github.com/mhsanaei/3x-ui/v3` | Он стоит в каждом импорте (сотни файлов). Переименование сделало бы каждое обновление из 3x-ui сплошным конфликтом, а пользователю он не виден. |
+| Переменные окружения `XUI_*` (`XUI_PORT`, `XUI_DB_TYPE`, `XUI_DB_DSN`, `XUI_LOG_LEVEL` и др.) и `window.X_UI_*` во фронтенде | Это интерфейс настройки: на них завязаны скрипты, Docker, файлы окружения и документация 3x-ui. Смена имён сломала бы совместимость настроек, а пользователю они не видны. |
+| Джейл fail2ban `3x-ipl` и журналы `3xipl.log` / `3xipl-banned.log` | Связка «панель → журнал → fail2ban» для ограничения по IP. Имена внутренние, переименование ничего не даёт пользователю. |
+| Внутренние переменные в shell-скриптах (`xui_folder`, `xui_service` и т. п.) | Видны только в коде скриптов. |
+| Сторонние компоненты: `mtg-multi` (github.com/mhsanaei/mtg-multi), Xray-core, tuic-server | Это отдельные проекты, их бинарники скачиваются из их собственных релизов. |
+| Команда `migrate` («migrate from other/old x-ui») | Описывает перенос именно из x-ui. |
+| Файл `LICENSE`, история коммитов, упоминания 3x-ui в комментариях кода | Требование GPL-3.0 и честная атрибуция. |
+| Папка `docs/` (сайт документации 3x-ui на Next.js) | Не входит в пакет и не собирается, оставлена как справочник. |
+| Скриншоты в `media/` | Используются только в `README.3x-ui.md`. |
+
+## Переход с установленного 3x-ui
+
+itr-xray ставится **рядом** с 3x-ui и не трогает её файлы: у них разные пути, службы и базы. Оба по умолчанию занимают порт 2053. Чтобы перенести данные:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) dev-latest
+systemctl stop x-ui && systemctl disable x-ui
 ```
-
-During installation a random username, password, and access path are generated. After installation, run `x-ui` to open the management menu, where you can start/stop the service, view or reset your login credentials, manage SSL certificates, and more.
-
-Every release asset is published with a `.sha256` sum next to it. Both `install.sh` and the updater verify the archive against that sum and abort on a mismatch.
-
-For full documentation — installation, configuration, operations, and the complete API reference — visit **[docs.sanaei.dev](https://docs.sanaei.dev)**.
-
-### Unattended install
-
-The installer also runs **non-interactively** for cloud-init.
-Set `XUI_NONINTERACTIVE=1` (or pipe with no TTY) and it installs end-to-end with
-zero prompts, generating random credentials and writing them to
-`/etc/x-ui/install-result.env`. See [`deploy/`](deploy/) for:
-
-- [Cloud-init user-data](deploy/cloud-init/) — unattended install on any cloud (Hetzner/AWS/DO/Vultr/GCP/Azure/Oracle)
-- [Hetzner Cloud notes](deploy/marketplace/hetzner/) — cloud-init deployment on Hetzner
-
-## Supported Platforms
-
-**Operating systems:** Ubuntu, Debian, Armbian, Fedora, CentOS, RHEL, AlmaLinux, Rocky Linux, Oracle Linux, Amazon Linux, Virtuozzo, Arch, Manjaro, Parch, openSUSE (Tumbleweed / Leap), Alpine, and Windows.
-
-**Architectures:** `amd64` · `386` · `arm64` (aarch64) · `armv7` · `armv6` · `armv5` · `s390x`.
-
-## Database Options
-
-3X-UI supports two backends, chosen during the install:
-
-- **SQLite** (default) — a single file at `/etc/x-ui/x-ui.db`. Zero setup, ideal for small and medium deployments.
-- **PostgreSQL** — recommended for high client counts or multi-node setups. The installer can install PostgreSQL locally for you, or accept a DSN to an existing server.
-
-At runtime the backend is selected via environment variables (the installer writes these to `/etc/default/x-ui` for you):
-
-```
-XUI_DB_TYPE=postgres
-XUI_DB_DSN=postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable
-```
-
-### Migrating an existing SQLite install to PostgreSQL
 
 ```bash
-x-ui migrate-db --dsn "postgres://xui:password@127.0.0.1:5432/xui?sslmode=disable"
-# then set XUI_DB_TYPE and XUI_DB_DSN in /etc/default/x-ui and restart:
-systemctl restart x-ui
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/main/install.sh)
 ```
-
-The source SQLite file is left untouched; remove it manually once you have verified the new backend.
-
-### Docker
-
-The default `docker compose up -d` keeps using SQLite. To run with the bundled PostgreSQL service, uncomment the two `XUI_DB_*` env lines in `docker-compose.yml` and start with the profile:
 
 ```bash
-docker compose --profile postgres up -d
+systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && systemctl start itr-xray
 ```
 
-The image bundles Fail2ban (enabled by default) to enforce per-client **IP limits**. Fail2ban bans offenders with `iptables`, which requires the `NET_ADMIN` capability. `docker-compose.yml` already grants it via `cap_add`; if you start the container with `docker run` instead, add the capabilities yourself, otherwise bans are logged but never applied:
+Если вы меняли параметры в `/etc/default/x-ui`, перенесите их в `/etc/default/itr-xray`. После проверки старую 3x-ui можно удалить командой `x-ui uninstall`.
+
+## Релизы и версии
+
+- Версия itr-xray совпадает с версией 3x-ui, на которой она основана (сейчас `3.8.5`, файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`.
+- Выпуск релиза: создать и отправить тег, например `git tag v3.8.5 && git push origin v3.8.5`. Сценарий `.github/workflows/release.yml` соберёт архивы для всех архитектур и Windows и прикрепит их к релизу вместе с контрольными суммами.
+- Канал разработки (`dev-latest`) обновляется ручным запуском «Release itr-xray» на ветке `main` (вкладка Actions → Run workflow).
+- Docker-образ собирается вручную: сценарий «Release itr-xray for Docker».
+
+## Фирменный стиль
+
+Палитра снята с презентации IT_RUNNER (титульный слайд и слайды со светлым фоном):
+
+| Роль | Цвет |
+|---|---|
+| Тёмно-синий (плашки, логотип на светлом) | `#292852` |
+| Градиент фона (титульный слайд, экран входа) | `#2A2953` → `#5956B1` |
+| Основной фиолетовый (кнопки в светлой теме) | `#5956B1` |
+| Основной цвет в тёмной теме (кнопки, контраст с белым 4,8:1) | `#6966C9` |
+| Ссылки в тёмной теме (контраст с фоном 4,9:1) | `#8F8CEB` |
+| Акцент, пурпур (отблески, полоска активного пункта меню) | `#B455AD` |
+| Светлый сиреневый (второстепенный текст на тёмном) | `#CED0E2` |
+| Фон тёмной темы / карточки / всплывающие окна | `#1C1B3A` / `#262550` / `#302E60` |
+| Фон светлой темы | `#EEEEF6` |
+
+Шрифты:
+
+- **YFF Rare Mega** (Bold, Black) — заголовки, названия карточек и окон. Подключены подмножества латиницы и кириллицы в woff2 (≈20 КБ на начертание): `frontend/src/assets/fonts/`.
+  > Сейчас используется **пробная (TRIAL) версия** шрифта. Лицензия: <http://www.yourfontfetish.com/eula>. Для коммерческого использования шрифт нужно купить и заменить эти два файла.
+- **Inter** (OFL, пакет `@fontsource-variable/inter`) — основной текст, таблицы, формы.
+
+Где что лежит:
+
+| Файл | Что |
+|---|---|
+| `frontend/src/components/brand/ItrLogo.tsx` | Логотип и знак `IT_` как SVG-компонент (цвет — `currentColor`) |
+| `frontend/src/components/brand/AboutModal.tsx` | Окно «О программе» |
+| `frontend/src/hooks/useTheme.tsx` | Цвета тем Ant Design |
+| `frontend/src/styles/brand.css` | Шрифты и CSS-переменные `--itr-*` |
+| `frontend/src/pages/login/LoginPage.css` | Экран входа |
+| `frontend/public/icons/` | Иконки приложения и вкладки |
+| `media/brand/` | Логотип (белый и тёмно-синий) и иконка в SVG — для документов и сайта |
+
+Логотип построен из контуров букв YFF Rare Mega Black, поэтому сам шрифт для него не нужен и он не пикселизируется ни в каком размере.
+
+## Обновление из 3x-ui
+
+Репозиторий — полноценный форк с историей 3x-ui. Оригинал подключён как `upstream`. Его теги хранятся с префиксом `upstream/`, чтобы не пересекаться с тегами релизов itr-xray (например, `v3.8.5` есть и там, и здесь):
 
 ```bash
-docker run -d --cap-add=NET_ADMIN --cap-add=NET_RAW ... ghcr.io/mhsanaei/3x-ui
+git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remote.upstream.tagOpt --no-tags
 ```
 
-## Environment Variables
+```bash
+git fetch upstream refs/tags/v3.9.0:refs/tags/upstream/v3.9.0 && git merge upstream/v3.9.0
+```
 
-| Variable | Description | Default |
-| --- | --- | --- |
-| `XUI_DB_TYPE` | Database backend: `sqlite` or `postgres` | `sqlite` |
-| `XUI_DB_DSN` | PostgreSQL connection string (when `XUI_DB_TYPE=postgres`) | — |
-| `XUI_DB_FOLDER` | Directory for the SQLite database file | `/etc/x-ui` |
-| `XUI_DB_MAX_OPEN_CONNS` | Maximum open connections (PostgreSQL pool) | — |
-| `XUI_DB_MAX_IDLE_CONNS` | Maximum idle connections (PostgreSQL pool) | — |
-| `XUI_INIT_WEB_BASE_PATH` | The initial URI path for the web panel | `/` |
-| `XUI_ENABLE_FAIL2BAN` | Enable Fail2ban-based IP-limit enforcement | `true` |
-| `XUI_LOG_LEVEL` | Log verbosity (`debug`, `info`, `warning`, `error`) | `info` |
-| `XUI_DEBUG` | Enable debug mode | `false` |
-| `XUI_TUNNEL_HEALTH_MONITOR` | Enable the tunnel health monitor (probes a URL and restarts xray after repeated failures; a restart drops all clients) | `false` |
-| `XUI_TUNNEL_HEALTH_PROXY` | Proxy the probe is sent through; point it at a local xray inbound so the probe tests the tunnel (e.g. `socks5://127.0.0.1:1080`). Empty means the probe only checks host connectivity | — |
-| `XUI_TUNNEL_HEALTH_URL` | URL probed for tunnel health | `https://www.cloudflare.com/cdn-cgi/trace` |
-| `XUI_TUNNEL_HEALTH_INTERVAL` | Interval between probes | `30s` |
-| `XUI_TUNNEL_HEALTH_TIMEOUT` | Per-probe timeout | `10s` |
-| `XUI_TUNNEL_HEALTH_FAILURES` | Consecutive failures before a restart is triggered | `3` |
-| `XUI_TUNNEL_HEALTH_COOLDOWN` | Minimum delay between consecutive restarts | `5m` |
-| `NODE_TOKEN_ENCRYPTION` | Encryption at rest for node API tokens: `off`, `migration`, or `required` (note: no `XUI_` prefix) | `off` |
-| `XUI_NODE_TOKEN_KEY_FILE` | JSON keyring (mode `0600`) holding the active key id and its base64 32-byte keys | `/etc/x-ui/node_token_key.json` |
-| `XUI_NODE_TOKEN_KEY` | A single base64 32-byte key, used only when the key file cannot be loaded | — |
+Конфликты обычно бывают в файлах из таблиц выше: `install.sh`, `update.sh`, `itr-xray.sh`, `.github/workflows/release.yml`, `internal/config/config.go`, `frontend/src/hooks/useTheme.tsx`, `frontend/src/layouts/AppSidebar.tsx` и в файлах переводов. После слияния обновите `internal/config/version` и проверьте, что новые упоминания `x-ui` / `3x-ui` в скриптах тоже переименованы:
 
-The complete list is on the [environment variables reference](https://docs.sanaei.dev/docs/reference/env-vars).
+```bash
+grep -rn "x-ui" install.sh update.sh itr-xray.sh
+```
 
-## Supported Languages
+Проверки перед релизом (в `frontend/` нужен Node 24 из `.nvmrc`, Go — версия из `go.mod`):
 
-The panel UI is available in 13 languages:
+```bash
+cd frontend && npm ci && npm run gen && npm run typecheck && npm run lint && npm test && npm run build
+```
 
-English · فارسی · العربية · 中文（简体） · 中文（繁體） · Español · Русский · Українська · Türkçe · Tiếng Việt · 日本語 · Bahasa Indonesia · Português (Brasil)
+```bash
+go vet ./... && go test ./...
+```
 
-## Contributing
+## Лицензия
 
-Contributions are welcome. Please read the [Contributing Guide](/CONTRIBUTING.md) before opening an issue or pull request.
-
-## A Special Thanks to
-
-- [alireza0](https://github.com/alireza0/)
-
-## Acknowledgment
-
-- [Iran v2ray rules](https://github.com/chocolate4u/Iran-v2ray-rules) (License: **GPL-3.0**): _Enhanced v2ray/xray and v2ray/xray-clients routing rules with built-in Iranian domains and a focus on security and adblocking._
-- [Russia v2ray rules](https://github.com/runetfreedom/russia-v2ray-rules-dat) (License: **GPL-3.0**): _This repository contains automatically updated V2Ray routing rules based on data on blocked domains and addresses in Russia._
-
-## Community Tools
-
-Tools and integrations built by the community around 3x-ui.
-
-- [terraform-provider-3x-ui](https://github.com/batonogov/terraform-provider-threexui) (License: **MIT**): _Manage inbounds, clients, panel settings, and Xray configuration as code with Terraform / OpenTofu._
-- [3X-UI Manager](https://github.com/yukh975/3X-UI-Manager) (License: **MIT**): _Native Android client for 3x-ui — dashboard, inbounds, clients with QR sharing, nodes and multi-panel management. Available on F-Droid._
-
-## Support project
-
-**If this project is helpful to you, you may wish to give it a**:star2:
-
-<a href="https://www.buymeacoffee.com/MHSanaei" target="_blank">
-<img src="./media/default-yellow.png" alt="Buy Me A Coffee" style="height: 70px !important;width: 277px !important;" >
-</a>
-
-</br>
-<a href="https://nowpayments.io/donation/hsanaei" target="_blank" rel="noreferrer noopener">
-   <img src="./media/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
-</a>
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=mhsanaei%2F3x-ui&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=mhsanaei/3x-ui&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=mhsanaei/3x-ui&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=mhsanaei/3x-ui&type=date&legend=top-left" />
- </picture>
-</a>
-
-<p align="center">
- <a href="https://www.star-history.com/mhsanaei/3x-ui">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=rank" /><img alt="Star History Rank" src="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=trending" /><img alt="GitHub Trending Repository of the Day" src="https://api.star-history.com/badge?repo=MHSanaei/3x-ui&type=trending" /></picture>
- </a>
-</p>
+itr-xray распространяется по лицензии [GNU GPL v3.0](LICENSE), как и исходный проект [3x-ui](https://github.com/MHSanaei/3x-ui) (© MHSanaei и участники). Изменения IT_RUNNER — оформление интерфейса и переименование — распространяются на тех же условиях.

@@ -43,3 +43,9 @@ docker-compose.override.yml
 
 # Ignore .env (Environment Variables) file
 .env
+
+# itr-xray: local docker compose data
+/db/
+/cert/
+/acme/
+/pgdata/
