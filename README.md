@@ -7,9 +7,7 @@
 
 <h3 align="center">itr-xray — панель управления Xray от IT_RUNNER</h3>
 
-**itr-xray** — это веб-панель для управления серверами [Xray-core](https://github.com/XTLS/Xray-core) в фирменном стиле IT_RUNNER. Функциональность полностью взята из open-source проекта [3x-ui](https://github.com/MHSanaei/3x-ui) версии **v3.8.5**. Переработаны оформление интерфейса и имена в системе: команда, служба, пути, пакет и установщик.
-
-Оригинальный README 3x-ui со списком возможностей лежит в [README.3x-ui.md](README.3x-ui.md).
+**itr-xray** — это веб-панель для управления серверами [Xray-core](https://github.com/XTLS/Xray-core) в фирменном стиле IT_RUNNER. 
 
 ---
 
