@@ -1,11 +1,53 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 Operational guide for AI agents working in this repo. Long-form human docs:
 `CONTRIBUTING.md` (setup, testing philosophy) and `frontend/README.md`.
 Read those before large changes. This file is the short, must-follow version.
 For a deep navigation map (request lifecycle, cron-job table, symptom → file
 index, layering rules), read `docs/architecture.md` on demand — do not guess
 file locations when it can answer in one hop.
+
+## itr-xray fork — read first
+This repo is **itr-xray**, IT_RUNNER's rebranded fork of 3x-ui (base: upstream
+`v3.8.5`, tag `upstream/v3.8.5`). Functionality is upstream's; the fork owns
+branding, system names and release plumbing. `README.md` (Russian) holds the
+full "было → стало" rename table — update it whenever you rename or keep
+something. The owner communicates in Russian; commit messages here are Russian.
+- Names: binary/CLI/service `itr-xray` (`itr-xray.sh`, `itr-xray.service.*`,
+  `itr-xray.rc`), paths `/usr/local/itr-xray`, `/etc/itr-xray/itr-xray.db`,
+  `/var/log/itr-xray`, fail2ban jail `itr-xray-ipl` + `itr-xray-ipl*.log`,
+  session cookie `itr-xray`, Go module `github.com/lastresorter/itr-xray`.
+  The DB file name comes from `internal/config/name`. Deliberately KEPT:
+  `XUI_*` env vars, `window.X_UI_*`, internal shell vars (`xui_folder`),
+  `mtg-multi` from `github.com/mhsanaei/mtg-multi`, `docs/` (upstream docs site).
+- Branding layer: `frontend/src/components/brand/ItrLogo.tsx` (outlined SVG
+  paths, variants `word` IT_RUNNER / `dash` IT-RUNNER / `itr` ITR — sidebar uses
+  dash/itr), `AboutModal.tsx` (must keep the 3x-ui credit + GPL line),
+  `frontend/src/styles/brand.css` (fonts, `--itr-*` vars), palette tokens in
+  `frontend/src/hooks/useTheme.tsx` (ultra-dark is the default), icons in
+  `frontend/public/icons/itr-xray*`, favicon links injected by
+  `brandIconInjection` in `internal/web/controller/dist.go`. The heading font
+  YFF Rare is a TRIAL build (`frontend/src/assets/fonts/`).
+- Versioning is independent of upstream: `internal/config/version` (strict
+  `X.Y.Z` — the update checker and `parseVersionParts` reject suffixes).
+  `install.sh` refuses versions below `min_version="1.0.1"`.
+- Releases: `release.yml` runs ONLY on `v*.*.*` tags or manual dispatch (private
+  repo, Actions minutes), publishes non-prerelease assets
+  `itr-xray-linux-<arch>.tar.gz` (+`.sha256`) for 7 arches + Windows zip. Do not
+  re-add branch/PR triggers. Docker (`docker.yml`) and the install smoke test
+  (`smoke.yml`) are manual-only; the installer's anonymous downloads only work
+  once the repo is public. Pushing a tag or changing releases needs the owner's OK.
+- Upstream merges: remote `upstream` has `tagOpt --no-tags`; fetch a release as
+  `git fetch upstream refs/tags/vX.Y.Z:refs/tags/upstream/vX.Y.Z`, merge
+  `upstream/vX.Y.Z`. Afterwards re-apply renames in new upstream code:
+  `github.com/mhsanaei/3x-ui/v3` → `github.com/lastresorter/itr-xray`,
+  `x-ui`/`3x-ui` in scripts/Go strings, `3x-ipl`/`3xipl` → `itr-xray-ipl`,
+  `MHSanaei/3x-ui` release URLs → `lastresorter/itr-xray`; keep our
+  `internal/config/version` and bump it.
+- Local preview: `docker compose up -d --build` → http://localhost:2053
+  (admin/admin on a fresh `db/`).
 
 ## Stack
 - Backend: Go 1.27 (`module github.com/lastresorter/itr-xray`), Gin, GORM.
@@ -24,14 +66,14 @@ file locations when it can answer in one hop.
   falls back to a process restart on older binaries. A client's panel-side
   traffic reset also calls `POST /secrets/{name}/reset-quota` so a renewed client
   is not re-blocked by the sidecar's quota counter.
-- Storage: SQLite by default (`/etc/x-ui/x-ui.db` on Linux; the executable dir on
+- Storage: SQLite by default (`/etc/itr-xray/itr-xray.db` on Linux; the executable dir on
   Windows), PostgreSQL optional (`XUI_DB_TYPE` / `XUI_DB_DSN`). The CGo SQLite
   driver (`mattn/go-sqlite3`) needs a C compiler — `CGO_ENABLED=0` builds fail.
 - Frontend: React 19 + Ant Design 6 + Vite 8 + TypeScript in `frontend/`,
   built into `internal/web/dist/` (gitignored) and embedded via `embed.FS`.
 
 ## Repo map
-- `main.go` — entry point + `x-ui` CLI (run, migrate, migrate-db, encrypt-tokens, setting, cert).
+- `main.go` — entry point + `itr-xray` CLI (run, migrate, migrate-db, encrypt-tokens, setting, cert).
 - `internal/config/` — env parsing (XUI_DEBUG, XUI_LOG_LEVEL, XUI_LOG_FOLDER,
   XUI_BIN_FOLDER, XUI_SKIP_HSTS, XUI_PORT, XUI_DB_*).
 - `internal/database/` + `internal/database/model/` — GORM schema (~24 models;
@@ -69,8 +111,8 @@ file locations when it can answer in one hop.
   into `frontend/src/generated/` from Go structs. The OpenAPI doc itself
   (`frontend/public/openapi.json`) is assembled from those + `endpoints.ts` by
   `frontend/scripts/build-openapi.mjs`.
-- `docs/` — separate Next.js/Fumadocs site (pnpm, own CI in `docs-ci.yml`,
-  outside `make verify`). Holds a THIRD independent implementation of
+- `docs/` — upstream 3x-ui Next.js/Fumadocs site (pnpm; its CI workflows were
+  removed in this fork, not rebranded, outside `make verify`). Holds a THIRD independent implementation of
   link/subscription generation in `docs/lib/xray/` — check it whenever
   share-link or install-command output changes.
 
@@ -98,9 +140,9 @@ file locations when it can answer in one hop.
 - A new or renamed endpoint has a FOURTH step nothing checks: copy
   `frontend/public/openapi.json` → `docs/public/openapi.json`, then
   `cd docs && pnpm gen:api` to refresh the MDX under
-  `docs/content/docs/en/reference/api/`. `docs-ci.yml` fires only on `docs/**`.
+  `docs/content/docs/en/reference/api/`.
 - A new English i18n key goes in EVERY locale JSON in `internal/web/translation/`
-  (13 files) AND must be referenced from `frontend/src` or Go in the SAME commit —
+  (12 files; uk-UA was removed) AND must be referenced from `frontend/src` or Go in the SAME commit —
   `frontend/src/test/i18n-dead-keys.test.ts` fails both ways. It is a frontend
   test, so run `npm test`, not just `make test-go`. At runtime the frontend falls
   back to en-US; Go (`internal/web/locale/`) returns "" for an unknown key.
@@ -118,7 +160,9 @@ file locations when it can answer in one hop.
   `t.Helper()` on helpers. Assert the exact value / typed error / emitted
   string, never just `err != nil`. Prefer real deps over mocks: throwaway DB via
   `database.InitDB(filepath.Join(t.TempDir(), "x-ui.db"))` +
-  `t.Cleanup(func() { _ = database.CloseDB() })`; `httptest` for HTTP.
+  `t.Cleanup(func() { _ = database.CloseDB() })`; `httptest` for HTTP. Code
+  that resolves `config.GetDBPath()` (backup/import) expects `itr-xray.db`
+  under `XUI_DB_FOLDER`, so name the fixture file accordingly there.
   `internal/sub`'s `initSubDB(t)` is the template.
 - A test must fail without its fix. Write it, revert the fix, watch it go red,
   restore. A test that passes either way is worse than no test: it certifies
@@ -164,6 +208,15 @@ you touch DB/dialect or parser code.
 
 Common targets: `make gen` (regenerate Zod/OpenAPI), `make lint` (Go + frontend),
 `make test` (Go `-shuffle=on` + frontend), `make race`, `make build`. See `Makefile`.
+
+Single tests:
+
+    go test ./internal/sub/ -run 'TestName/subtest' -count=1
+    cd frontend && npx vitest run --project unit src/test/log-parse.test.ts
+
+Vitest projects are `unit`, `components` and `storybook` (the last needs the
+Playwright Chromium). golangci-lint must be built with Go ≥ the `go.mod`
+version, or it refuses to load the config.
 
 ## Definition of done (before opening a PR)
 1. `make verify` passes — its `gen-check` already runs `make gen` and fails on a
