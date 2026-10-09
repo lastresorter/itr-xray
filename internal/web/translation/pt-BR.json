@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Modelo de tráfego esgotado",
       "subTrafficDepletedTemplateDesc": "Modelo para a configuração fictícia quando a cota de tráfego foi esgotada.",
       "subHappAutoDetect": "Detecção automática de cabeçalhos do Happ",
-      "subHappAutoDetectDesc": "Injeta automaticamente o roteamento e os cabeçalhos do Happ quando o User-Agent do cliente indicar o Happ.",
+      "subHappAutoDetectDesc": "Injeta automaticamente o roteamento e os cabeçalhos do Happ quando o User-Agent do cliente indicar o Happ / ITR-XRAY-App.",
       "subHappProviderId": "ID do provedor (Provider ID)",
       "subHappProviderIdDesc": "Identificador único do provedor para gerenciamento de clientes Happ, vinculação de configuração remota e migração.",
       "subHappNewUrl": "Nova URL de assinatura",

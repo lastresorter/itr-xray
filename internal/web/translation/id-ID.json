@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Templat Kuota Habis",
       "subTrafficDepletedTemplateDesc": "Templat untuk konfigurasi dummy saat kuota data langganan telah habis.",
       "subHappAutoDetect": "Deteksi Otomatis Header Happ",
-      "subHappAutoDetectDesc": "Otomatis menyisipkan routing dan header Happ saat User-Agent klien menunjukkan Happ.",
+      "subHappAutoDetectDesc": "Otomatis menyisipkan routing dan header Happ saat User-Agent klien menunjukkan Happ / ITR-XRAY-App.",
       "subHappProviderId": "ID Penyedia (Provider ID)",
       "subHappProviderIdDesc": "Pengenal unik penyedia untuk manajemen klien Happ, pengikatan konfigurasi jarak jauh, dan migrasi.",
       "subHappNewUrl": "URL Langganan Baru",

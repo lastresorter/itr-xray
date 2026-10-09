@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Шаблон исчерпания трафика",
       "subTrafficDepletedTemplateDesc": "Шаблон для фиктивного узла, когда лимит трафика исчерпан.",
       "subHappAutoDetect": "Автоопределение заголовков Happ",
-      "subHappAutoDetectDesc": "Автоматически добавлять заголовки и маршрутизацию для клиентов с User-Agent Happ.",
+      "subHappAutoDetectDesc": "Автоматически добавлять заголовки и маршрутизацию для клиентов с User-Agent Happ / ITR-XRAY-App.",
       "subHappProviderId": "Идентификатор провайдера (Provider ID)",
       "subHappProviderIdDesc": "Уникальный идентификатор для управления приложением, удаленной конфигурации и миграции.",
       "subHappNewUrl": "Новый URL подписки (Миграция)",

@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "流量耗盡範本",
       "subTrafficDepletedTemplateDesc": "使用者訂閱流量用盡時提示配置的備註範本。",
       "subHappAutoDetect": "Happ 標頭自動識別",
-      "subHappAutoDetectDesc": "當用戶端 User-Agent 顯示為 Happ 時，自動注入 Happ 路由與標頭。",
+      "subHappAutoDetectDesc": "當用戶端 User-Agent 顯示為 Happ / ITR-XRAY-App 時，自動注入 Happ 路由與標頭。",
       "subHappProviderId": "提供者 ID",
       "subHappProviderIdDesc": "用於 Happ 用戶端管理、遠端設定綁定與遷移的唯一提供者識別碼。",
       "subHappNewUrl": "新訂閱 URL",

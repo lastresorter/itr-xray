@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Plantilla de tráfico agotado",
       "subTrafficDepletedTemplateDesc": "Plantilla para el nodo ficticio cuando el límite de tráfico se ha agotado.",
       "subHappAutoDetect": "Detección automática de cabeceras de Happ",
-      "subHappAutoDetectDesc": "Inyectar automáticamente el enrutamiento y las cabeceras de Happ cuando el User-Agent del cliente indica Happ.",
+      "subHappAutoDetectDesc": "Inyectar automáticamente el enrutamiento y las cabeceras de Happ cuando el User-Agent del cliente indica Happ / ITR-XRAY-App.",
       "subHappProviderId": "ID del proveedor (Provider ID)",
       "subHappProviderIdDesc": "Identificador único del proveedor para la gestión de clientes de Happ, la vinculación de la configuración remota y la migración.",
       "subHappNewUrl": "Nueva URL de suscripción",

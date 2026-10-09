@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Mẫu hết dung lượng",
       "subTrafficDepletedTemplateDesc": "Mẫu cho cấu hình ảo khi tài khoản đăng ký đã dùng hết dung lượng.",
       "subHappAutoDetect": "Tự động nhận diện header Happ",
-      "subHappAutoDetectDesc": "Tự động chèn định tuyến và header Happ khi User-Agent của ứng dụng khách cho thấy đó là Happ.",
+      "subHappAutoDetectDesc": "Tự động chèn định tuyến và header Happ khi User-Agent của ứng dụng khách cho thấy đó là Happ / ITR-XRAY-App.",
       "subHappProviderId": "ID nhà cung cấp (Provider ID)",
       "subHappProviderIdDesc": "Mã định danh duy nhất của nhà cung cấp, dùng để quản lý ứng dụng khách Happ, liên kết cấu hình từ xa và di chuyển.",
       "subHappNewUrl": "URL đăng ký mới",

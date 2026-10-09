@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "قالب پیام اتمام حجم",
       "subTrafficDepletedTemplateDesc": "قالب کانفیگ نمایشی زمانی که حجم اشتراک کاربر به پایان رسیده است.",
       "subHappAutoDetect": "تشخیص خودکار کلاینت Happ",
-      "subHappAutoDetectDesc": "تزریق خودکار هدرها و روتینگ Happ هنگامی که User-Agent کلاینت مربوط به برنامه Happ باشد.",
+      "subHappAutoDetectDesc": "تزریق خودکار هدرها و روتینگ Happ هنگامی که User-Agent کلاینت مربوط به برنامه Happ / ITR-XRAY-App باشد.",
       "subHappProviderId": "شناسه ارائه‌دهنده (Provider ID)",
       "subHappProviderIdDesc": "شناسه یکتا جهت مدیریت کلاینت Happ، اتصال به کانفیگ ریموت و مهاجرت کاربران.",
       "subHappNewUrl": "لینک اشتراک جدید (مهاجرت)",
