@@ -84,7 +84,7 @@
     "vitest": "^5.0.0"
   },
   "overrides": {
-    "dompurify": "^3.4.11",
+    "dompurify": "^3.4.16",
     "react-copy-to-clipboard": "^5.1.1",
     "react-inspector": "^9.0.0",
     "react-debounce-input": {
@@ -92,7 +92,7 @@
     },
     "swagger-ui-react": {
       "js-yaml": "^4.3.2",
-      "brace-expansion": "^5.0.9"
+      "brace-expansion": "^5.0.12"
     },
     "@typeschema/valibot": {
       "valibot": "^1.1.0"
