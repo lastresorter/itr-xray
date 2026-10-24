@@ -327,6 +327,8 @@ func TestIsHappClient(t *testing.T) {
 		"happ",
 		"HAPP/1.0",
 		"Mozilla/5.0 Happ/1.0",
+		"ITR-XRAY-App/1.6.4 (ru.itrunner.xray; build:401; android)",
+		"ITR-XRAY-App (windows)",
 	}
 	for _, ua := range matching {
 		if !IsHappClient(ua) {
@@ -340,6 +342,8 @@ func TestIsHappClient(t *testing.T) {
 		"Happening/1.0",
 		"unhappy",
 		"v2rayNG/1.8.5",
+		"itr-xray/1.0.3",
+		"ITR-XRAY-Application/1.0",
 		"",
 	}
 	for _, ua := range nonMatching {

@@ -7,7 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var happUserAgentRegex = regexp.MustCompile(`(?i)\bhapp\b`)
+// ITR-XRAY-App is our own client: it reads the same headers as Happ.
+var happUserAgentRegex = regexp.MustCompile(`(?i)\b(happ|itr-xray-app)\b`)
 
 // HappConfig holds all Happ client customization parameters.
 type HappConfig struct {
@@ -36,7 +37,7 @@ type HappConfig struct {
 	PerAppList          string
 }
 
-// IsHappClient checks if the client user-agent identifies as Happ.
+// IsHappClient checks if the client user-agent identifies as Happ or ITR-XRAY-App.
 func IsHappClient(userAgent string) bool {
 	return happUserAgentRegex.MatchString(userAgent)
 }

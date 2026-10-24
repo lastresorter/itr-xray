@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "قالب نفاد البيانات",
       "subTrafficDepletedTemplateDesc": "قالب التكوين الوهمي عند استهلاك حصة بيانات المستخدم بالكامل.",
       "subHappAutoDetect": "اكتشاف ترويسات Happ تلقائيًا",
-      "subHappAutoDetectDesc": "حقن توجيه Happ والترويسات تلقائيًا عندما يشير User-Agent الخاص بالعميل إلى Happ.",
+      "subHappAutoDetectDesc": "حقن توجيه Happ والترويسات تلقائيًا عندما يشير User-Agent الخاص بالعميل إلى Happ / ITR-XRAY-App.",
       "subHappProviderId": "معرّف المزوّد (Provider ID)",
       "subHappProviderIdDesc": "معرّف فريد للمزوّد يُستخدم لإدارة عملاء Happ وربط الإعدادات عن بُعد والترحيل.",
       "subHappNewUrl": "رابط الاشتراك الجديد",

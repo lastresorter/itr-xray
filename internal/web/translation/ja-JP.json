@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "通信量超過テンプレート",
       "subTrafficDepletedTemplateDesc": "サブスクリプションの通信量が上限に達した際のダミー構成用テンプレート。",
       "subHappAutoDetect": "Happ ヘッダーの自動検出",
-      "subHappAutoDetectDesc": "クライアントの User-Agent が Happ を示す場合、Happ のルーティングとヘッダーを自動的に挿入します。",
+      "subHappAutoDetectDesc": "クライアントの User-Agent が Happ / ITR-XRAY-App を示す場合、Happ のルーティングとヘッダーを自動的に挿入します。",
       "subHappProviderId": "プロバイダー ID",
       "subHappProviderIdDesc": "Happ クライアントの管理、リモート設定の紐付け、移行に使用する一意のプロバイダー識別子。",
       "subHappNewUrl": "新しいサブスクリプション URL",

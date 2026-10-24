@@ -1518,7 +1518,7 @@
       "subTrafficDepletedTemplate": "Trafik Tükendi Şablonu",
       "subTrafficDepletedTemplateDesc": "Abonelik trafik kotası bittiğinde sahte yapılandırma için kullanılacak şablon.",
       "subHappAutoDetect": "Happ Başlıkları Otomatik Algılama",
-      "subHappAutoDetectDesc": "İstemcinin User-Agent değeri Happ'i gösterdiğinde Happ yönlendirmesini ve başlıklarını otomatik olarak ekler.",
+      "subHappAutoDetectDesc": "İstemcinin User-Agent değeri Happ / ITR-XRAY-App'i gösterdiğinde Happ yönlendirmesini ve başlıklarını otomatik olarak ekler.",
       "subHappProviderId": "Sağlayıcı Kimliği (Provider ID)",
       "subHappProviderIdDesc": "Happ istemci yönetimi, uzak yapılandırma bağlama ve geçiş için benzersiz sağlayıcı tanımlayıcısı.",
       "subHappNewUrl": "Yeni Abonelik URL'si",

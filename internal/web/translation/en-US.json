@@ -1636,7 +1636,7 @@
       "subTrafficDepletedTemplate": "Traffic Depleted Template",
       "subTrafficDepletedTemplateDesc": "Template for the dummy config when subscriber traffic quota is exhausted.",
       "subHappAutoDetect": "Happ Header Auto-Detection",
-      "subHappAutoDetectDesc": "Automatically inject Happ routing and headers when client User-Agent indicates Happ.",
+      "subHappAutoDetectDesc": "Automatically inject Happ routing and headers when client User-Agent indicates Happ / ITR-XRAY-App.",
       "subHappProviderId": "Provider ID",
       "subHappProviderIdDesc": "Unique provider identifier for Happ client management, remote configuration binding, and migration.",
       "subHappNewUrl": "New Subscription URL",
