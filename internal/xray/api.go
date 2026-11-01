@@ -203,6 +203,17 @@ func ValidateTunWfpBlockLeak(values []string) error {
 	return err
 }
 
+// ValidateXDriveS3 builds an "s3" xdriveSettings object through the vendored loader, which runs
+// the endpoint, bucket and secret checks xray-core 26.10.31 (#7231) applies to the S3 backend.
+func ValidateXDriveS3(xdriveSettings []byte) error {
+	c := new(conf.XDriveConfig)
+	if err := json.Unmarshal(xdriveSettings, c); err != nil {
+		return err
+	}
+	_, err := c.Build()
+	return err
+}
+
 // validateWireguardRemoteDNS refuses what conf.Build() lets through but the core feeds to
 // netip.MustParseAddr at startup: a non-IP remoteDNS entry, like "local" before 26.9.30.
 func validateWireguardRemoteDNS(settings *serial.TypedMessage) error {
