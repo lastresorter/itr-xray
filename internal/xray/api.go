@@ -35,6 +35,7 @@ import (
 	"github.com/xtls/xray-core/proxy/shadowsocks"
 	"github.com/xtls/xray-core/proxy/shadowsocks_2022"
 	"github.com/xtls/xray-core/proxy/trojan"
+	"github.com/xtls/xray-core/proxy/tun"
 	"github.com/xtls/xray-core/proxy/vless"
 	"github.com/xtls/xray-core/proxy/vmess"
 	wireguard "github.com/xtls/xray-core/proxy/wireguard"
@@ -193,6 +194,13 @@ func ValidateOutboundConfig(outbound []byte) error {
 		return err
 	}
 	return validateWireguardRemoteDNS(built.ProxySettings)
+}
+
+// ValidateTunWfpBlockLeak runs the core's own check of a TUN inbound's autoSystemWfpBlockLeak,
+// which xray-core 26.10.31 (#7288) widened to "windnsclient" and "tcp/<port>" / "udp/<port>".
+func ValidateTunWfpBlockLeak(values []string) error {
+	_, err := tun.ExpandWfpBlockLeak(values)
+	return err
 }
 
 // validateWireguardRemoteDNS refuses what conf.Build() lets through but the core feeds to
