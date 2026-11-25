@@ -35,7 +35,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/main/ins
 Установка конкретной версии:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v1.0.3/install.sh) v1.0.3
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v1.1.0/install.sh) v1.1.0
 ```
 
 > [!IMPORTANT]
@@ -97,10 +97,11 @@ itr-xray uninstall    удалить
 | Кнопки «Донат» (donate.sanaei.dev) и «Документация» (docs.sanaei.dev), значок версии со ссылкой на GitHub 3x-ui | Кнопка и окно **«О программе»**: версия панели и строка «itr-xray использует open-source решение 3x-ui» со ссылкой на github.com/MHSanaei/3x-ui |
 | Заголовок вкладки «3X-UI» | «IT_RUNNER» |
 | Издатель (issuer) в QR-коде двухфакторной авторизации «3x-ui» | «IT_RUNNER» |
-| Строки с «3X-UI» во всех 12 языках (Telegram-бот, Discord, диалог обновления и др.) | «itr-xray» |
+| Строки с «3X-UI» во всех 13 языках (Telegram-бот, Discord, диалог обновления и др.) | «itr-xray» |
 | Имя скачиваемого журнала `x-ui.log` | `itr-xray.log` |
-| 13 языков интерфейса | 12: украинский удалён |
+| 14 языков интерфейса | 13: украинский удалён (словацкий из 3x-ui v3.11 оставлен) |
 | Ссылка на документацию шаблонов подписки в репозитории 3x-ui | Та же страница в `lastresorter/itr-xray` |
+| Витрина спонсоров 3x-ui: страница «Спонсоры», блоки на входе и дашборде, эндпоинты `/sponsors` (данные с сервера 3x-ui) | Удалена целиком, панель не обращается к серверу спонсоров |
 
 ### Сервер и система
 
@@ -129,14 +130,19 @@ itr-xray uninstall    удалить
 | Метка сервиса в разборе журнала `X-UI:` | `ITR:` |
 | Джейл, фильтр и действие fail2ban для ограничения по IP `3x-ipl` (`/etc/fail2ban/{jail,filter,action}.d/3x-ipl.conf`, `3x-ipl-backend.conf`) | `itr-xray-ipl` (`itr-xray-ipl.conf`, `itr-xray-ipl-backend.conf`) |
 | Журналы ограничения по IP `3xipl.log`, `3xipl-banned.log`, `3xipl-banned.prev.log` | `itr-xray-ipl.log`, `itr-xray-ipl-banned.log`, `itr-xray-ipl-banned.prev.log` |
-| Версия панели `3.8.5` | `1.0.3` — собственная нумерация itr-xray |
+| Песочница systemd: `ReadWritePaths=/etc/x-ui /usr/local/x-ui /var/log/x-ui`, дополнения в `x-ui.service.d/` | `/etc/itr-xray /usr/local/itr-xray /var/log/itr-xray`, `itr-xray.service.d/` (файл `10-xui-sandbox.conf` генерируется установщиком) |
+| Подсказка установки ядерного AmneziaWG `sudo /usr/local/x-ui/x-ui install-awg-kernel` | `sudo /usr/local/itr-xray/itr-xray install-awg-kernel` |
+| Маркеры ядерного AmneziaWG в правилах и конфигах `3x-ui:<имя>`, `# 3x-ui-owned-amneziawg:` | `itr-xray:<имя>`, `# itr-xray-owned-amneziawg:` |
+| HWID для внешних подписок `3x-ui-server-<uuid>` | `itr-xray-server-<uuid>` |
+| Версия панели `3.11.0` | `1.1.0` — собственная нумерация itr-xray |
 
 ### Пакет, установщик и сборка
 
 | Было (3x-ui) | Стало (itr-xray) |
 |---|---|
 | Архив релиза `x-ui-linux-<arch>.tar.gz` (+ `.sha256`), внутри папка `x-ui/` | `itr-xray-linux-<arch>.tar.gz` (+ `.sha256`), внутри папка `itr-xray/` |
-| Архив для Windows `x-ui-windows-amd64.zip` | `itr-xray-windows-amd64.zip` |
+| Архив для Windows `x-ui-windows-amd64.zip`, внутри `3x-ui.exe` | `itr-xray-windows-amd64.zip`, внутри `itr-xray.exe` |
+| Ресурсы Windows-бинарника (`winres/`): иконка 3X, «3X-UI», издатель MHSanaei | Иконка ITR, «itr-xray», издатель IT_RUNNER |
 | `install.sh` / `update.sh` качают из `MHSanaei/3x-ui` | Качают из `lastresorter/itr-xray` |
 | Сборка релиза на каждый push в любую ветку | Только по тегу `v*.*.*` или ручному запуску (экономия минут GitHub Actions в приватном репозитории) |
 | Релизы по тегу публикуются как pre-release | Как обычные релизы: иначе `install.sh` не находит их через `releases/latest` |
@@ -145,8 +151,8 @@ itr-xray uninstall    удалить
 | Контейнер `3xui_app`, часовой пояс `Asia/Tehran` | Контейнер `itr-xray`, часовой пояс `Europe/Moscow` |
 | Smoke-тест установщика на каждый push | Только ручной запуск, пока репозиторий приватный |
 | Dependabot: отдельный PR на каждую зависимость, раз в неделю | Один сгруппированный PR на экосистему (Go, npm, GitHub Actions) раз в месяц; обновления безопасности приходят сразу |
-| Сценарии Actions: ИИ-ревью PR, разбор задач, CodeQL, мутационные тесты, деплой сайта документации | Удалены: без ключей и платных функций GitHub они не работают или относятся только к 3x-ui |
-| Путь Go-модуля `github.com/lastresorter/itr-xray` | `github.com/lastresorter/itr-xray` (все импорты, `go.mod`, флаги сборки в `release.yml`, настройки линтера) |
+| Сценарии Actions: ИИ-ревью PR, разбор задач, CodeQL, мутационные тесты, деплой сайта документации; настройки бота (`.github/claude/`) и сканера (`.oss-scanner/`) | Удалены: без ключей и платных функций GitHub они не работают или относятся только к 3x-ui |
+| Путь Go-модуля `github.com/mhsanaei/3x-ui/v3` | `github.com/lastresorter/itr-xray` (все импорты, `go.mod`, флаги сборки в `release.yml`, настройки линтера) |
 | README на 7 языках | Этот README; оригинал — в `README.3x-ui.md` |
 
 ## Что намеренно не переименовано
@@ -154,7 +160,7 @@ itr-xray uninstall    удалить
 | Что | Почему |
 |---|---|
 | Переменные окружения `XUI_*` (`XUI_PORT`, `XUI_DB_TYPE`, `XUI_DB_DSN`, `XUI_LOG_LEVEL` и др.) и `window.X_UI_*` во фронтенде | Это интерфейс настройки: на них завязаны скрипты, Docker, файлы окружения и документация 3x-ui. Смена имён сломала бы совместимость настроек, а пользователю они не видны. |
-| Внутренние переменные в shell-скриптах (`xui_folder`, `xui_service` и т. п.) | Видны только в коде скриптов. |
+| Внутренние переменные в shell-скриптах (`xui_folder`, `xui_service` и т. п.), имя дополнения `10-xui-sandbox.conf` | Видны только в коде скриптов и служебных файлах. |
 | Сторонние компоненты: `mtg-multi` (github.com/mhsanaei/mtg-multi), Xray-core, tuic-server | Это отдельные проекты, их бинарники скачиваются из их собственных релизов. |
 | Команда `migrate` («migrate from other/old x-ui») | Описывает перенос именно из x-ui. |
 | Файл `LICENSE`, история коммитов, упоминания 3x-ui в комментариях кода | Требование GPL-3.0 и честная атрибуция. |
@@ -181,7 +187,7 @@ systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && sys
 
 ## Релизы и версии
 
-- У itr-xray собственная нумерация версий, не связанная с 3x-ui: сейчас `1.0.3` (файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`, поэтому суффиксы вроде `-beta` не использовать.
+- У itr-xray собственная нумерация версий, не связанная с 3x-ui: сейчас `1.1.0` (файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`, поэтому суффиксы вроде `-beta` не использовать.
 - Установщик не ставит версии ниже `1.0.1` (порог `min_version` в `install.sh`).
 - Выпуск релиза: создать и отправить тег, например `git tag v1.0.1 && git push origin v1.0.1`. Сценарий `.github/workflows/release.yml` соберёт архивы для всех архитектур и Windows и прикрепит их к релизу вместе с контрольными суммами.
 - Канал разработки (`dev-latest`) обновляется ручным запуском «Release itr-xray» на ветке `main` (вкладка Actions → Run workflow).
@@ -232,13 +238,13 @@ git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remo
 ```
 
 ```bash
-git fetch upstream refs/tags/v3.9.0:refs/tags/upstream/v3.9.0 && git merge upstream/v3.9.0
+git fetch upstream refs/tags/v3.12.0:refs/tags/upstream/v3.12.0 && git merge upstream/v3.12.0
 ```
 
-Путь модуля у itr-xray свой, поэтому новые и изменённые Go-файлы из 3x-ui будут импортировать `github.com/lastresorter/itr-xray/...`. После слияния замените его:
+Путь модуля у itr-xray свой, поэтому новые и изменённые Go-файлы из 3x-ui будут импортировать `github.com/mhsanaei/3x-ui/v3/...`. После слияния замените его:
 
 ```bash
-grep -rlI "github.com/lastresorter/itr-xray" --include='*.go' . | xargs perl -pi -e 's#github.com/lastresorter/itr-xray#github.com/lastresorter/itr-xray#g'
+grep -rlI "github.com/mhsanaei/3x-ui/v3" --include='*.go' . | xargs perl -pi -e 's#github.com/mhsanaei/3x-ui/v3#github.com/lastresorter/itr-xray#g'
 ```
 
 То же касается имён fail2ban (`3x-ipl`, `3xipl`) в `itr-xray.sh`, `DockerEntrypoint.sh` и `internal/xray/process.go`.
@@ -246,8 +252,10 @@ grep -rlI "github.com/lastresorter/itr-xray" --include='*.go' . | xargs perl -pi
 Конфликты обычно бывают в файлах из таблиц выше: `install.sh`, `update.sh`, `itr-xray.sh`, `.github/workflows/release.yml`, `internal/config/config.go`, `frontend/src/hooks/useTheme.tsx`, `frontend/src/layouts/AppSidebar.tsx` и в файлах переводов. В `internal/config/version` при конфликте оставьте версию itr-xray и поднимите её (например, до `1.1.0`). Проверьте также, что новые упоминания `x-ui` / `3x-ui` в скриптах тоже переименованы:
 
 ```bash
-grep -rn "x-ui" install.sh update.sh itr-xray.sh
+grep -rn "x-ui" install.sh update.sh itr-xray.sh itr-xray.service.* main.go internal/amneziawgkern
 ```
+
+Особенно важны пути в `ReadWritePaths=` юнитов systemd: если там останутся каталоги `x-ui`, песочница сделает каталоги itr-xray доступными только для чтения и панель не сможет писать в базу.
 
 Проверки перед релизом (в `frontend/` нужен Node 24 из `.nvmrc`, Go — версия из `go.mod`):
 

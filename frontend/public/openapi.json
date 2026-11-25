@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "3X-UI Panel API",
-    "version": "3.x",
-    "description": "Programmatic interface to a 3X-UI panel. Authenticate either by logging in (cookie) or with a scoped API token from Settings → Security → API Token (Bearer). Token access is limited by its admin, monitor, node-sync, or node-admin scope; treat admin tokens like the panel password."
+    "title": "itr-xray Panel API",
+    "version": "1.x",
+    "description": "Programmatic interface to an itr-xray panel by IT_RUNNER. Authenticate either by logging in (cookie) or with a scoped API token from Settings → Security → API Token (Bearer). Token access is limited by its admin, monitor, node-sync, or node-admin scope; treat admin tokens like the panel password."
   },
   "servers": [
     {
@@ -4364,7 +4364,7 @@
             "type": "array"
           },
           "installCommand": {
-            "example": "sudo /usr/local/itr-xray/x-ui install-awg-kernel",
+            "example": "sudo /usr/local/itr-xray/itr-xray install-awg-kernel",
             "type": "string"
           },
           "ready": {
@@ -4660,90 +4660,6 @@
           "id",
           "key",
           "value"
-        ],
-        "type": "object"
-      },
-      "Sponsor": {
-        "description": "Sponsor is one paid placement published in the repo's sponsors.json.",
-        "properties": {
-          "enable": {
-            "example": true,
-            "nullable": true,
-            "type": "boolean"
-          },
-          "from": {
-            "example": "2026-10-01T00:00:00Z",
-            "format": "date-time",
-            "nullable": true,
-            "type": "string"
-          },
-          "id": {
-            "example": "acme-2026-10",
-            "type": "string"
-          },
-          "link": {
-            "example": "https://acme.example/?utm_source=3x-ui",
-            "type": "string"
-          },
-          "logo": {
-            "example": "/sponsors/logo/acme.png",
-            "type": "string"
-          },
-          "name": {
-            "example": "Acme VPS",
-            "type": "string"
-          },
-          "slots": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "text": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object"
-          },
-          "title": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object"
-          },
-          "until": {
-            "example": "2026-11-01T00:00:00Z",
-            "format": "date-time",
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "link",
-          "name",
-          "slots",
-          "text",
-          "title",
-          "until"
-        ],
-        "type": "object"
-      },
-      "SponsorList": {
-        "description": "SponsorList is the active sponsor set plus the contact link for new sponsors.",
-        "properties": {
-          "contact": {
-            "example": "https://t.me/example",
-            "type": "string"
-          },
-          "sponsors": {
-            "items": {
-              "$ref": "#/components/schemas/Sponsor"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "sponsors"
         ],
         "type": "object"
       },
@@ -5228,60 +5144,6 @@
         }
       }
     },
-    "/sponsors": {
-      "get": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Public. Active paid sponsor placements read from the project sponsors.json (cached for 1h); entries outside their from/until window are dropped. Logos are proxied by the panel at /sponsors/logo/{name}. Used by the login page and panel sponsor slots.",
-        "operationId": "get_sponsors",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string"
-                    },
-                    "obj": {
-                      "$ref": "#/components/schemas/SponsorList"
-                    }
-                  }
-                },
-                "example": {
-                  "success": true,
-                  "obj": {
-                    "contact": "https://t.me/example",
-                    "sponsors": [
-                      {
-                        "enable": true,
-                        "from": "2026-10-01T00:00:00Z",
-                        "id": "acme-2026-10",
-                        "link": "https://acme.example/?utm_source=3x-ui",
-                        "logo": "/sponsors/logo/acme.png",
-                        "name": "Acme VPS",
-                        "slots": [
-                          ""
-                        ],
-                        "text": {},
-                        "title": {},
-                        "until": "2026-11-01T00:00:00Z"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/getTwoFactorEnable": {
       "post": {
         "tags": [
@@ -5551,7 +5413,7 @@
                         "detail": "awg"
                       }
                     ],
-                    "installCommand": "sudo /usr/local/itr-xray/x-ui install-awg-kernel",
+                    "installCommand": "sudo /usr/local/itr-xray/itr-xray install-awg-kernel",
                     "ready": false
                   }
                 }
