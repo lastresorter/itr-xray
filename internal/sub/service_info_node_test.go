@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 	"github.com/lastresorter/itr-xray/internal/web/service"
 	"github.com/lastresorter/itr-xray/internal/xray"
@@ -15,12 +16,7 @@ import (
 
 func setupInfoNodeTestDB(t *testing.T) {
 	t.Helper()
-	if err := database.InitDB(t.TempDir() + "/test_infonode.db"); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() {
-		_ = database.CloseDB()
-	})
+	dbtest.InitDB(t, t.TempDir()+"/test_infonode.db")
 	db := database.GetDB()
 	if err := db.AutoMigrate(
 		&model.Inbound{},

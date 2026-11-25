@@ -11,7 +11,7 @@ file locations when it can answer in one hop.
 
 ## itr-xray fork — read first
 This repo is **itr-xray**, IT_RUNNER's rebranded fork of 3x-ui (base: upstream
-`v3.8.5`, tag `upstream/v3.8.5`). Functionality is upstream's; the fork owns
+`v3.11.0`, tag `upstream/v3.11.0`). Functionality is upstream's; the fork owns
 branding, system names and release plumbing. `README.md` (Russian) holds the
 full "было → стало" rename table — update it whenever you rename or keep
 something. The owner communicates in Russian; commit messages here are Russian.
@@ -42,12 +42,12 @@ something. The owner communicates in Russian; commit messages here are Russian.
 - Upstream merges: remote `upstream` has `tagOpt --no-tags`; fetch a release as
   `git fetch upstream refs/tags/vX.Y.Z:refs/tags/upstream/vX.Y.Z`, merge
   `upstream/vX.Y.Z`. Afterwards re-apply renames in new upstream code:
-  `github.com/mhsanaei/3x-ui/v3` → `github.com/lastresorter/itr-xray`,
+  `github.com/lastresorter/itr-xray` → `github.com/lastresorter/itr-xray`,
   `x-ui`/`3x-ui` in scripts/Go strings, `3x-ipl`/`3xipl` → `itr-xray-ipl`,
   `MHSanaei/3x-ui` release URLs → `lastresorter/itr-xray`; keep our
   `internal/config/version` and bump it.
 - Local preview: `docker compose up -d --build` → http://localhost:2053
-  (admin/admin on a fresh `db/`).
+  (a fresh `db/` gets a random first user, printed once in `docker compose logs`).
 
 ## Stack
 - Backend: Go 1.27 (`module github.com/lastresorter/itr-xray`), Gin, GORM.
@@ -83,7 +83,7 @@ something. The owner communicates in Russian; commit messages here are Russian.
 - `internal/xray/geodata/` — streaming geosite/geoip `.dat` reader (cached
   category index + paged entries) and `geosite:`/`geoip:`/`ext:` token parsing.
 - `internal/mtproto/` — MTProto inbounds via the bundled `mtg-multi` binary.
-- `internal/tuic/` — TUIC v5 inbounds: `tuic-server` sidecar supervisor, native Go UDP relay traffic metering.
+- `internal/tuic/` — TUIC v5 inbounds: native in-process Go QUIC server (no sidecar), traffic journal.
 - `internal/amneziawg/` — AmneziaWG protocol shape: instance/peer derivation
   from an inbound, 3.1 obfuscation param generation + validation, port-forward
   spec parsing.
@@ -91,6 +91,7 @@ something. The owner communicates in Russian; commit messages here are Russian.
   over a gVisor userspace netstack, per-inbound reconcile manager, TCP/UDP
   relay into a loopback per-peer-auth SOCKS5 Xray inbound, port-forward
   listeners, per-peer IPv6 egress aliases.
+- `internal/amneziawgkern/` — opt-in Linux kernel AmneziaWG datapath (NAT-only).
 - `internal/pia/` — PIA WireGuard protocol client (auth, signed server list, `/addKey`).
 - `internal/sub/` — subscription server (raw / JSON / Clash).
 - `internal/eventbus/` — in-process pub/sub (outbound/node health, xray.crash,
@@ -105,7 +106,7 @@ something. The owner communicates in Russian; commit messages here are Russian.
     CPU/memory watchdogs, …); full table in `docs/architecture.md` §5.4.
   - `middleware/`, `entity/`, `global/`, `session/` (CSRF), `network/`,
     `runtime/` (master/sub-node over mTLS), `websocket/`.
-  - `locale/` + `translation/` — i18n, 12 embedded locale JSON files.
+  - `locale/` + `translation/` — i18n, 13 embedded locale JSON files.
 - `frontend/` — React + TS source (see `frontend/CLAUDE.md`).
 - `tools/openapigen/` — Go generator that emits frontend types + Zod/JSON schemas
   into `frontend/src/generated/` from Go structs. The OpenAPI doc itself
@@ -142,7 +143,7 @@ something. The owner communicates in Russian; commit messages here are Russian.
   `cd docs && pnpm gen:api` to refresh the MDX under
   `docs/content/docs/en/reference/api/`.
 - A new English i18n key goes in EVERY locale JSON in `internal/web/translation/`
-  (12 files; uk-UA was removed) AND must be referenced from `frontend/src` or Go in the SAME commit —
+  (13 files; uk-UA was removed, sk-SK came from upstream) AND must be referenced from `frontend/src` or Go in the SAME commit —
   `frontend/src/test/i18n-dead-keys.test.ts` fails both ways. It is a frontend
   test, so run `npm test`, not just `make test-go`. At runtime the frontend falls
   back to en-US; Go (`internal/web/locale/`) returns "" for an unknown key.
@@ -159,8 +160,9 @@ something. The owner communicates in Russian; commit messages here are Russian.
 - Stdlib `testing` only (no testify). Table-driven, `t.Run` subtests,
   `t.Helper()` on helpers. Assert the exact value / typed error / emitted
   string, never just `err != nil`. Prefer real deps over mocks: throwaway DB via
-  `database.InitDB(filepath.Join(t.TempDir(), "x-ui.db"))` +
-  `t.Cleanup(func() { _ = database.CloseDB() })`; `httptest` for HTTP. Code
+  `dbtest.InitDB(t, filepath.Join(t.TempDir(), "itr-xray.db"))`
+  (`internal/database/dbtest`: once-migrated template + `CloseDB` cleanup; keep
+  `database.InitDB` for reopening a file or a hand-built legacy DB); `httptest` for HTTP. Code
   that resolves `config.GetDBPath()` (backup/import) expects `itr-xray.db`
   under `XUI_DB_FOLDER`, so name the fixture file accordingly there.
   `internal/sub`'s `initSubDB(t)` is the template.

@@ -6,15 +6,13 @@ import (
 	"testing"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 )
 
 func TestStageSQLiteUploadRebuildsFromDump(t *testing.T) {
 	dir := t.TempDir()
 	dbPath := filepath.Join(dir, "x-ui.db")
-	if err := database.InitDB(dbPath); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, dbPath)
 	dump, err := database.DumpSQLiteToBytes(dbPath)
 	if err != nil {
 		t.Fatalf("DumpSQLiteToBytes: %v", err)

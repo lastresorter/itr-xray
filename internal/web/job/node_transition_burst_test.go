@@ -13,10 +13,12 @@ import (
 	"github.com/op/go-logging"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 	"github.com/lastresorter/itr-xray/internal/eventbus"
 	xuilogger "github.com/lastresorter/itr-xray/internal/logger"
 	"github.com/lastresorter/itr-xray/internal/web/runtime"
+	"github.com/lastresorter/itr-xray/internal/web/service"
 )
 
 // goingDownNodes seeds n online nodes whose address refuses connections, so the
@@ -24,12 +26,12 @@ import (
 func goingDownNodes(t *testing.T, n int) {
 	t.Helper()
 	xuilogger.InitLogger(logging.ERROR)
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(t.TempDir(), "x-ui.db"))
 	runtime.SetManager(runtime.NewManager(runtime.LocalDeps{APIPort: func() int { return 0 }, SetNeedRestart: func() {}}))
 	t.Cleanup(func() { runtime.SetManager(nil) })
+	if err := (&service.SettingService{}).SetNodeDownThreshold(1); err != nil {
+		t.Fatalf("SetNodeDownThreshold: %v", err)
+	}
 	srv := httptest.NewServer(nil)
 	host, port, _ := strings.Cut(strings.TrimPrefix(srv.URL, "http://"), ":")
 	portNum, _ := strconv.Atoi(port)

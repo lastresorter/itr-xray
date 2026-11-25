@@ -36,7 +36,7 @@ export default function AboutModal({ open, onClose }: { open: boolean; onClose: 
       <div className="itr-about-credits">
         <p>{t('about.basedOn')}</p>
         <a href={UPSTREAM_URL} target="_blank" rel="noopener noreferrer">
-          <GithubOutlined /> github.com/MHSanaei/3x-ui
+          <GithubOutlined aria-hidden /> github.com/MHSanaei/3x-ui
         </a>
         <p className="itr-about-license">{t('about.license')}</p>
       </div>
