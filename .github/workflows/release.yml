@@ -168,10 +168,14 @@ jobs:
           tar -zcvf itr-xray-linux-${{ matrix.platform }}.tar.gz itr-xray
           sha256sum itr-xray-linux-${{ matrix.platform }}.tar.gz > itr-xray-linux-${{ matrix.platform }}.tar.gz.sha256
 
+      # Only publish-dev (manual runs) reads these; a tag build skips them so a full
+      # artifact quota cannot block the release upload below.
       - name: Upload files to Artifacts
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v7
         with:
           name: itr-xray-linux-${{ matrix.platform }}
+          retention-days: 1
           path: |
             ./itr-xray-linux-${{ matrix.platform }}.tar.gz
             ./itr-xray-linux-${{ matrix.platform }}.tar.gz.sha256
@@ -309,10 +313,14 @@ jobs:
           $hash = (Get-FileHash itr-xray-windows-amd64.zip -Algorithm SHA256).Hash.ToLower()
           [IO.File]::WriteAllText("$PWD\itr-xray-windows-amd64.zip.sha256", "$hash  itr-xray-windows-amd64.zip`n")
 
+      # Only publish-dev (manual runs) reads these; a tag build skips them so a full
+      # artifact quota cannot block the release upload below.
       - name: Upload files to Artifacts
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v7
         with:
           name: itr-xray-windows-amd64
+          retention-days: 1
           path: |
             ./itr-xray-windows-amd64.zip
             ./itr-xray-windows-amd64.zip.sha256
