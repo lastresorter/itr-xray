@@ -47,7 +47,7 @@ something. The owner communicates in Russian; commit messages here are Russian.
   `MHSanaei/3x-ui` release URLs → `lastresorter/itr-xray`; keep our
   `internal/config/version` and bump it.
 - Local preview: `docker compose up -d --build` → http://localhost:2053
-  (admin/admin on a fresh `db/`).
+  (a fresh `db/` gets a random first user, printed once in `docker compose logs`).
 
 ## Stack
 - Backend: Go 1.27 (`module github.com/lastresorter/itr-xray`), Gin, GORM.
