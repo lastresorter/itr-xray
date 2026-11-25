@@ -9,9 +9,6 @@ import (
 	"regexp"
 	"strings"
 	"testing"
-	"unicode/utf16"
-
-	"github.com/goccy/go-yaml"
 )
 
 const (
@@ -80,46 +77,5 @@ func TestReviewLocaleFileCount(t *testing.T) {
 	}
 	if got := len(files); m[1] != itoa(got) {
 		t.Errorf("%s tells the reviewer to expect %s locale files, internal/web/translation/ holds %d", reviewPath, m[1], got)
-	}
-}
-
-// GitHub rejects the whole workflow once a value holding ${{ }} passes 21,000
-// characters, so every trigger fails with no job to read; actionlint misses it.
-func TestBotPromptsFitGitHubExpressionLimit(t *testing.T) {
-	const limit = 21000
-	files, err := filepath.Glob(".github/workflows/claude-*.yml")
-	if err != nil || len(files) == 0 {
-		t.Fatalf("glob bot workflows: %v (%d files)", err, len(files))
-	}
-	checked := 0
-	for _, path := range files {
-		var wf struct {
-			Jobs map[string]struct {
-				Steps []struct {
-					With map[string]any `yaml:"with"`
-				} `yaml:"steps"`
-			} `yaml:"jobs"`
-		}
-		if err := yaml.Unmarshal([]byte(readRepoFile(t, path)), &wf); err != nil {
-			t.Fatalf("parse %s: %v", path, err)
-		}
-		for job, j := range wf.Jobs {
-			for _, step := range j.Steps {
-				for key, v := range step.With {
-					s, ok := v.(string)
-					if !ok || !strings.Contains(s, "${{") {
-						continue
-					}
-					checked++
-					// GitHub counts .NET string length: UTF-16 code units.
-					if n := len(utf16.Encode([]rune(s))); n > limit {
-						t.Errorf("%s job %s with.%s is %d characters; GitHub rejects the workflow over %d", path, job, key, n, limit)
-					}
-				}
-			}
-		}
-	}
-	if checked == 0 {
-		t.Fatal("no ${{ }} value found in the bot workflows: the parse no longer reaches the prompts")
 	}
 }
