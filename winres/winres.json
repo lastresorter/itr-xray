@@ -1,0 +1,54 @@
+{
+  "RT_GROUP_ICON": {
+    "APP": {
+      "0000": "icon.png"
+    }
+  },
+  "RT_MANIFEST": {
+    "#1": {
+      "0409": {
+        "identity": {
+          "name": "itr-xray",
+          "version": ""
+        },
+        "description": "itr-xray web panel for Xray-core by IT_RUNNER",
+        "minimum-os": "win7",
+        "execution-level": "as invoker",
+        "ui-access": false,
+        "auto-elevate": false,
+        "dpi-awareness": "system",
+        "disable-theming": false,
+        "disable-window-filtering": false,
+        "high-resolution-scrolling-aware": false,
+        "ultra-high-resolution-scrolling-aware": false,
+        "long-path-aware": false,
+        "printer-driver-isolation": false,
+        "gdi-scaling": false,
+        "segment-heap": false,
+        "use-common-controls-v6": false
+      }
+    }
+  },
+  "RT_VERSION": {
+    "#1": {
+      "0000": {
+        "fixed": {
+          "file_version": "0.0.0.0",
+          "product_version": "0.0.0.0"
+        },
+        "info": {
+          "0409": {
+            "CompanyName": "IT_RUNNER",
+            "FileDescription": "itr-xray web panel for Xray-core by IT_RUNNER",
+            "FileVersion": "",
+            "InternalName": "itr-xray",
+            "LegalCopyright": "IT_RUNNER, based on 3x-ui, licensed under GPL-3.0",
+            "OriginalFilename": "itr-xray.exe",
+            "ProductName": "itr-xray",
+            "ProductVersion": ""
+          }
+        }
+      }
+    }
+  }
+}

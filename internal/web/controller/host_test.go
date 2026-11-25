@@ -14,6 +14,7 @@ import (
 	"github.com/op/go-logging"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 	xuilogger "github.com/lastresorter/itr-xray/internal/logger"
 	"github.com/lastresorter/itr-xray/internal/web/entity"
@@ -25,10 +26,7 @@ func newHostTestDB(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	dbDir := t.TempDir()
 	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "itr-xray.db")); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(dbDir, "itr-xray.db"))
 }
 
 type hostEnvelope struct {

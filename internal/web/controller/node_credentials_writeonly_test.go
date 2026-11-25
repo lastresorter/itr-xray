@@ -16,6 +16,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 	"github.com/lastresorter/itr-xray/internal/web/locale"
 )
@@ -25,10 +26,7 @@ func newNodeCredentialTestEngine(t *testing.T) *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	dbDir := t.TempDir()
 	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(dbDir, "x-ui.db"))
 
 	engine := gin.New()
 	engine.Use(func(c *gin.Context) {

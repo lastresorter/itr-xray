@@ -8,7 +8,7 @@ import (
 
 	"github.com/op/go-logging"
 
-	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 	xuilogger "github.com/lastresorter/itr-xray/internal/logger"
 )
@@ -20,14 +20,7 @@ func setupSubBalancerDB(t *testing.T) {
 	subBalancerLoggerOnce.Do(func() { xuilogger.InitLogger(logging.ERROR) })
 	dbDir := t.TempDir()
 	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() {
-		if err := database.CloseDB(); err != nil {
-			t.Logf("CloseDB warning: %v", err)
-		}
-	})
+	dbtest.InitDB(t, filepath.Join(dbDir, "x-ui.db"))
 }
 
 func TestSubBalancerServiceCRUD(t *testing.T) {

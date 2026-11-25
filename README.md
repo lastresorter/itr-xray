@@ -146,7 +146,7 @@ itr-xray uninstall    удалить
 | Smoke-тест установщика на каждый push | Только ручной запуск, пока репозиторий приватный |
 | Dependabot: отдельный PR на каждую зависимость, раз в неделю | Один сгруппированный PR на экосистему (Go, npm, GitHub Actions) раз в месяц; обновления безопасности приходят сразу |
 | Сценарии Actions: ИИ-ревью PR, разбор задач, CodeQL, мутационные тесты, деплой сайта документации | Удалены: без ключей и платных функций GitHub они не работают или относятся только к 3x-ui |
-| Путь Go-модуля `github.com/mhsanaei/3x-ui/v3` | `github.com/lastresorter/itr-xray` (все импорты, `go.mod`, флаги сборки в `release.yml`, настройки линтера) |
+| Путь Go-модуля `github.com/lastresorter/itr-xray` | `github.com/lastresorter/itr-xray` (все импорты, `go.mod`, флаги сборки в `release.yml`, настройки линтера) |
 | README на 7 языках | Этот README; оригинал — в `README.3x-ui.md` |
 
 ## Что намеренно не переименовано
@@ -235,10 +235,10 @@ git remote add upstream https://github.com/MHSanaei/3x-ui.git && git config remo
 git fetch upstream refs/tags/v3.9.0:refs/tags/upstream/v3.9.0 && git merge upstream/v3.9.0
 ```
 
-Путь модуля у itr-xray свой, поэтому новые и изменённые Go-файлы из 3x-ui будут импортировать `github.com/mhsanaei/3x-ui/v3/...`. После слияния замените его:
+Путь модуля у itr-xray свой, поэтому новые и изменённые Go-файлы из 3x-ui будут импортировать `github.com/lastresorter/itr-xray/...`. После слияния замените его:
 
 ```bash
-grep -rlI "github.com/mhsanaei/3x-ui/v3" --include='*.go' . | xargs perl -pi -e 's#github.com/mhsanaei/3x-ui/v3#github.com/lastresorter/itr-xray#g'
+grep -rlI "github.com/lastresorter/itr-xray" --include='*.go' . | xargs perl -pi -e 's#github.com/lastresorter/itr-xray#github.com/lastresorter/itr-xray#g'
 ```
 
 То же касается имён fail2ban (`3x-ipl`, `3xipl`) в `itr-xray.sh`, `DockerEntrypoint.sh` и `internal/xray/process.go`.

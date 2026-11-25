@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/util/crypto"
 )
 
@@ -16,10 +17,7 @@ func setupSettingMtlsDB(t *testing.T) *SettingService {
 	t.Helper()
 	dbDir := t.TempDir()
 	t.Setenv("XUI_DB_FOLDER", dbDir)
-	if err := database.InitDB(filepath.Join(dbDir, "x-ui.db")); err != nil {
-		t.Fatalf("InitDB: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(dbDir, "x-ui.db"))
 	return &SettingService{}
 }
 

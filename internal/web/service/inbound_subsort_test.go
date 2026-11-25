@@ -5,14 +5,12 @@ import (
 	"testing"
 
 	"github.com/lastresorter/itr-xray/internal/database"
+	"github.com/lastresorter/itr-xray/internal/database/dbtest"
 	"github.com/lastresorter/itr-xray/internal/database/model"
 )
 
 func TestSetInboundSubSortIndexLeavesSettingsUntouched(t *testing.T) {
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
-		t.Fatalf("init db: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(t.TempDir(), "x-ui.db"))
 
 	const settings = `{"clients":[{"email":"a@example.test","id":"11111111-1111-1111-1111-111111111111"}]}`
 	ib := &model.Inbound{UserId: 1, Remark: "r", Port: 21001, Protocol: model.VLESS, Settings: settings, SubSortIndex: 1, Enable: true}
@@ -57,10 +55,7 @@ func TestSetInboundSubSortIndexUsesNarrowNodeUpdate(t *testing.T) {
 }
 
 func TestSetInboundSubSortIndexPreservesNegative(t *testing.T) {
-	if err := database.InitDB(filepath.Join(t.TempDir(), "x-ui.db")); err != nil {
-		t.Fatalf("init db: %v", err)
-	}
-	t.Cleanup(func() { _ = database.CloseDB() })
+	dbtest.InitDB(t, filepath.Join(t.TempDir(), "x-ui.db"))
 
 	ib := &model.Inbound{UserId: 1, Remark: "r", Port: 21003, Protocol: model.VLESS, Settings: `{"clients":[]}`, SubSortIndex: 1, Enable: true}
 	if err := database.GetDB().Create(ib).Error; err != nil {
