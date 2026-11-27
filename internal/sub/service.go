@@ -3267,6 +3267,7 @@ type PageData struct {
 	SubAnnounce   string
 	Result        []string
 	Emails        []string
+	HwidActive    bool
 }
 
 // ResolveRequest extracts scheme, host, and header information from an HTTP request.

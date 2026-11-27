@@ -32,6 +32,7 @@ const subSupportUrl = subData.subSupportUrl || '';
 const updateHours = Number(subData.subUpdates || 0);
 const announce = subData.announce || '';
 const links: string[] = Array.isArray(subData.links) ? subData.links : [];
+const hwidActive = !!subData.hwidActive;
 const linkEmails: string[] = Array.isArray(subData.emails) ? subData.emails : [];
 const totalByte = Number(subData.totalByte || 0);
 const usedByte =
@@ -147,6 +148,14 @@ export default function SubPage() {
               onLangChange={onLangChange}
             />
             {announce && <Alert type="info" showIcon title={announce} className="sub-announce" />}
+            {hwidActive && (
+              <Alert
+                type="warning"
+                showIcon
+                title={t('subscription.hwidOpenInApp')}
+                className="sub-announce"
+              />
+            )}
             <SubHero {...heroData} lang={lang} />
             {tabs.length > 0 && <Tabs className="sub-tabs" tabBarGutter={24} items={tabs} />}
             {(updateHours > 0 || subSupportUrl) && (

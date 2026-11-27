@@ -2,11 +2,13 @@ package sub
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -253,4 +255,51 @@ func TestSubscriptionHwidStatusHidesUnknownVersusDisabled(t *testing.T) {
 	if disabled.Body.Len() != 0 {
 		t.Fatalf("404 body = %q, want empty", disabled.Body.String())
 	}
+}
+
+// A browser sends no X-HWID, so every HTML/info view of a limited sub must carry
+// no ready config that could be imported past the device limit.
+func TestSubscriptionHtmlPageHidesConfigsUnderHwidLimit(t *testing.T) {
+	const uuid = "11111111-2222-4333-8444-555555555555"
+	htmlViews := []struct{ path, accept string }{
+		{"/sub/%s", "text/html"},
+		{"/sub/%s?html=1", ""},
+		{"/sub/%s?view=html", ""},
+		{"/json/%s", "text/html"},
+		{"/clash/%s", "text/html"},
+		{"/sub/%s?format=info", ""},
+	}
+	hasConfig := func(body string) bool {
+		for _, marker := range []string{"vless://", "vmess://", "trojan://", "ss://", uuid} {
+			if strings.Contains(body, marker) {
+				return true
+			}
+		}
+		return false
+	}
+
+	t.Run("limited", func(t *testing.T) {
+		router, subID := initHwidSubRouter(t, 3)
+		for _, view := range htmlViews {
+			rec := requestSub(t, router, http.MethodGet, fmt.Sprintf(view.path, subID), "", view.accept)
+			if rec.Code != http.StatusOK {
+				t.Fatalf("%s status = %d, want 200", view.path, rec.Code)
+			}
+			if hasConfig(rec.Body.String()) {
+				t.Fatalf("%s leaked a config under HWID limit: %q", view.path, rec.Body.String())
+			}
+		}
+		page := requestSub(t, router, http.MethodGet, "/sub/"+subID, "", "text/html").Body.String()
+		if !strings.Contains(page, `"hwidActive":true`) || !strings.Contains(page, `"links":null`) {
+			t.Fatalf("limited page data missing hwidActive/empty links: %q", page)
+		}
+	})
+
+	t.Run("unlimited page still lists configs", func(t *testing.T) {
+		router, subID := initHwidSubRouter(t, 0)
+		page := requestSub(t, router, http.MethodGet, "/sub/"+subID, "", "text/html").Body.String()
+		if !strings.Contains(page, "vless://"+uuid) || !strings.Contains(page, `"hwidActive":false`) {
+			t.Fatalf("unlimited page lost its configs: %q", page)
+		}
+	})
 }

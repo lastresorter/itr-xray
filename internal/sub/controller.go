@@ -454,6 +454,11 @@ func (a *SUBController) buildSubPageData(c *gin.Context) (PageData, bool) {
 	metadata := a.metadataForSubRequest(func() *SubService { return subReq }, subId, "")
 	page := subReq.BuildPageData(subId, hostHeader, traffic, lastOnline, subs, emails, subURL, subJsonURL, subClashURL, basePathStr, metadata.Title, metadata.SupportURL)
 	page.SubAnnounce = metadata.Announce
+	// A browser sends no X-HWID, so ready configs here would bypass the device limit.
+	if status, _, err := a.clientService.HwidSlotStatusForSubID(subId); err != nil || status.Active {
+		page.Result = nil
+		page.HwidActive = true
+	}
 	return page, true
 }
 
@@ -707,6 +712,7 @@ func (a *SUBController) subPageContext(page PageData) map[string]any {
 		"subSupportUrl": page.SubSupportUrl,
 		"subUpdates":    updateHours,
 		"links":         page.Result,
+		"hwidActive":    page.HwidActive,
 		"emails":        page.Emails,
 		"datepicker":    datepicker,
 		"announce":      page.SubAnnounce,

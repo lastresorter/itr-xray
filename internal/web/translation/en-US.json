@@ -104,7 +104,8 @@
     "support": "Support",
     "qrTitle": "Scan. Import. Connect.",
     "qrHint": "Scan with your client app. Keep this code private.",
-    "saveQr": "Save QR"
+    "saveQr": "Save QR",
+    "hwidOpenInApp": "This subscription is limited by device count. Open it in a VPN app via the Apps tab — configs are not shown in the browser."
   },
   "menu": {
     "theme": "Theme",
