@@ -35,7 +35,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/main/ins
 Установка конкретной версии:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v1.1.0/install.sh) v1.1.0
+bash <(curl -Ls https://raw.githubusercontent.com/lastresorter/itr-xray/v1.1.1/install.sh) v1.1.1
 ```
 
 > [!IMPORTANT]
@@ -134,7 +134,7 @@ itr-xray uninstall    удалить
 | Подсказка установки ядерного AmneziaWG `sudo /usr/local/x-ui/x-ui install-awg-kernel` | `sudo /usr/local/itr-xray/itr-xray install-awg-kernel` |
 | Маркеры ядерного AmneziaWG в правилах и конфигах `3x-ui:<имя>`, `# 3x-ui-owned-amneziawg:` | `itr-xray:<имя>`, `# itr-xray-owned-amneziawg:` |
 | HWID для внешних подписок `3x-ui-server-<uuid>` | `itr-xray-server-<uuid>` |
-| Версия панели `3.11.0` | `1.1.0` — собственная нумерация itr-xray |
+| Версия панели `3.11.0` | `1.1.1` — собственная нумерация itr-xray |
 
 ### Пакет, установщик и сборка
 
@@ -187,7 +187,7 @@ systemctl stop itr-xray && cp /etc/x-ui/x-ui.db /etc/itr-xray/itr-xray.db && sys
 
 ## Релизы и версии
 
-- У itr-xray собственная нумерация версий, не связанная с 3x-ui: сейчас `1.1.0` (файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`, поэтому суффиксы вроде `-beta` не использовать.
+- У itr-xray собственная нумерация версий, не связанная с 3x-ui: сейчас `1.1.1` (файл `internal/config/version`). Проверка обновлений в панели сравнивает версии строго в формате `X.Y.Z`, поэтому суффиксы вроде `-beta` не использовать.
 - Установщик не ставит версии ниже `1.0.1` (порог `min_version` в `install.sh`).
 - Выпуск релиза: создать и отправить тег, например `git tag v1.0.1 && git push origin v1.0.1`. Сценарий `.github/workflows/release.yml` соберёт архивы для всех архитектур и Windows и прикрепит их к релизу вместе с контрольными суммами.
 - Канал разработки (`dev-latest`) обновляется ручным запуском «Release itr-xray» на ветке `main` (вкладка Actions → Run workflow).
