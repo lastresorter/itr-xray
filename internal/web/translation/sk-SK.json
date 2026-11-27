@@ -104,7 +104,8 @@
     "support": "Podpora",
     "qrTitle": "Naskenovať. Importovať. Pripojiť sa.",
     "qrHint": "Naskenujte kód v klientskej aplikácii. Nikomu ho nesprístupňujte.",
-    "saveQr": "Uložiť QR kód"
+    "saveQr": "Uložiť QR kód",
+    "hwidOpenInApp": "Toto predplatné je obmedzené počtom zariadení. Otvorte ho vo VPN aplikácii cez kartu Aplikácie — konfigurácie sa v prehliadači nezobrazujú."
   },
   "menu": {
     "theme": "Vzhľad",

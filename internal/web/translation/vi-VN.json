@@ -104,7 +104,8 @@
     "support": "Hỗ trợ",
     "qrTitle": "Quét. Nhập. Kết nối.",
     "qrHint": "Quét bằng ứng dụng khách. Không chia sẻ mã này cho người khác.",
-    "saveQr": "Lưu QR"
+    "saveQr": "Lưu QR",
+    "hwidOpenInApp": "Gói đăng ký này bị giới hạn số thiết bị. Hãy mở trong ứng dụng VPN qua tab Ứng dụng — cấu hình không hiển thị trên trình duyệt."
   },
   "menu": {
     "theme": "Chủ đề",

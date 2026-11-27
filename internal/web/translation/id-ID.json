@@ -104,7 +104,8 @@
     "support": "Dukungan",
     "qrTitle": "Pindai. Impor. Terhubung.",
     "qrHint": "Pindai dengan aplikasi klien Anda. Jaga kerahasiaan kode ini.",
-    "saveQr": "Simpan QR"
+    "saveQr": "Simpan QR",
+    "hwidOpenInApp": "Langganan ini dibatasi jumlah perangkat. Buka di aplikasi VPN melalui tab Aplikasi — konfigurasi tidak ditampilkan di browser."
   },
   "menu": {
     "theme": "Tema",

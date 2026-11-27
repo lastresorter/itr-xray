@@ -104,7 +104,8 @@
     "support": "Suporte",
     "qrTitle": "Escaneie. Importe. Conecte.",
     "qrHint": "Escaneie com seu aplicativo cliente. Mantenha este código em sigilo.",
-    "saveQr": "Salvar QR"
+    "saveQr": "Salvar QR",
+    "hwidOpenInApp": "Esta assinatura é limitada por número de dispositivos. Abra-a em um app VPN pela aba Apps — as configurações não são exibidas no navegador."
   },
   "menu": {
     "theme": "Tema",

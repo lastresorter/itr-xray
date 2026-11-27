@@ -50,7 +50,8 @@ https://<sub-host>:<sub-port>/<sub-path>/<sub-id>
 
 فقط ورودی‌های فعالی که از **VLESS، VMess، Trojan، Shadowsocks، WireGuard، AmneziaWG، MTProto، TUIC یا Hysteria2**
 استفاده می‌کنند در یک اشتراک ظاهر می‌شوند و بر اساس شاخص sub-sort آن‌ها مرتب می‌شوند (TUIC و AmneziaWG در لینک‌های خام و پروفایل‌های Clash/Mihomo گنجانده می‌شوند اما از اندپوینت‌های JSON حذف می‌شوند؛ MTProto در لینک‌های خام گنجانده می‌شود). درخواست `subPath` همراه با هدر `Accept: text/html` (یا `?html=1`) به‌جای بدنه‌ی خام،
-یک صفحه‌ی اطلاعات خوانا برای انسان برمی‌گرداند.
+یک صفحه‌ی اطلاعات خوانا برای انسان برمی‌گرداند. اگر برای کلاینت محدودیت دستگاه (HWID) فعال باشد،
+این صفحه هیچ کانفیگی ندارد (`links` خالی و `hwidActive` برابر `true` است).
 
 ### Base64 vs JSON
 

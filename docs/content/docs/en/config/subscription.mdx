@@ -53,7 +53,9 @@ The **format is chosen by path**, each with its own enable toggle:
 Only enabled inbounds using **VLESS, VMess, Trojan, Shadowsocks, WireGuard, AmneziaWG, MTProto, TUIC, or Hysteria2**
 appear in a subscription, ordered by their sub-sort index by default (TUIC and AmneziaWG are included in raw links and Clash/Mihomo profiles, but omitted from JSON endpoints; MTProto is included in raw links). Requesting `subPath`
 with an `Accept: text/html` header (or `?html=1`) returns a human-readable info
-page instead of the raw body.
+page instead of the raw body. When the client has a device (HWID) limit, the page
+lists no configs (`links` is empty, `hwidActive` is `true`): a browser sends no
+`X-HWID`, so configs must be imported through an app.
 
 Use `/mihomo/<sub-id>` for Clash Verge Rev, Mihomo, and other maintained
 Mihomo-based clients. Use `/clash-legacy/<sub-id>` only for the discontinued
